@@ -2,7 +2,7 @@ package com.zitga.authentication.service;
 
 import com.zitga.authentication.model.AdminAuthentication;
 import com.zitga.bean.annotation.BeanComponent;
-import com.zitga.core.constants.socket.DisconnectReason;
+import com.zitga.core.constants.socket.BaseDisconnectReason;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +34,7 @@ public class CachedAuthService {
     public void onAdminLogin(AdminAuthentication adminAuth) {
         AdminAuthentication currentAdminLogin = cachedAuthMap.get(adminAuth.getId());
         if (currentAdminLogin != null) {
-            currentAdminLogin.getEndpoint().disconnect(DisconnectReason.ANOTHER_DEVICE_LOGIN);
+            currentAdminLogin.getEndpoint().disconnect(BaseDisconnectReason.ANOTHER_DEVICE_LOGIN);
         }
 
         addToCache(adminAuth);

@@ -2,7 +2,7 @@ package com.zitga.authentication.model.endPoint;
 
 import com.zitga.authentication.model.AdminAuthentication;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
-import com.zitga.core.constants.socket.DisconnectReason;
+import com.zitga.core.constants.socket.BaseDisconnectReason;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
 import com.zitga.core.handler.socket.support.context.Peer;
 import io.netty.buffer.ByteBuf;
@@ -59,7 +59,7 @@ public class AdminEndpoint implements IPeerAuthentication {
         peer.send(out);
     }
 
-    public void disconnect(DisconnectReason reason) {
+    public void disconnect(int reason) {
         peer.disconnect(reason);
     }
 

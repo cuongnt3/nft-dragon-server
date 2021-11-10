@@ -4,7 +4,7 @@ import com.zitga.authentication.model.AdminAuthentication;
 import com.zitga.authentication.model.endPoint.AdminEndpoint;
 import com.zitga.base.constant.LogicCode;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
-import com.zitga.core.constants.socket.DisconnectReason;
+import com.zitga.core.constants.socket.BaseDisconnectReason;
 import com.zitga.core.handler.socket.AbstractSocketHandler;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
 import io.netty.buffer.ByteBuf;
@@ -31,7 +31,7 @@ public abstract class AuthorizedHandler extends AbstractSocketHandler {
                         context.getPeer().getRemoteAddress(), opCode, adminAuth.getUserName());
             }
         } else {
-            context.getPeer().disconnect(DisconnectReason.AUTHORIZATION_REQUIRED);
+            context.getPeer().disconnect(BaseDisconnectReason.AUTHORIZATION_REQUIRED);
         }
     }
 
