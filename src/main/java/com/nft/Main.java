@@ -11,7 +11,7 @@ import org.slf4j.impl.StaticLoggerBinder;
 public class Main {
 
     public static void main(String[] args) {
-        Configurator.initialize("idle-summoner-admin", "config/log4j.properties");
+        Configurator.initialize("nft-dragon-server", "config/log4j.properties");
         MorphiaLoggerFactory.registerLogger(LoggerFactoryImpl.class);
 
         Logger logger = LoggerFactory.getLogger(Main.class);

@@ -1,7 +1,6 @@
 package com.nft.authentication.model;
 
 import com.nft.base.constant.CollectionName;
-import com.nft.battle.constant.BattleConstant;
 import com.zitga.core.authentication.IAuthorizedEntity;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
@@ -46,10 +45,6 @@ public class AdminAuthentication implements IPeerAuthentication, ISerializable, 
     @NotSaved
     private boolean isAuth;
 
-    @Transient
-    @NotSaved
-    private int battleId = BattleConstant.NO_BATTLE;
-
     public AdminAuthentication() {
         // for serialize purpose
     }
@@ -93,18 +88,6 @@ public class AdminAuthentication implements IPeerAuthentication, ISerializable, 
         peer.send(out);
     }
 
-    public boolean isInBattle(int battleId) {
-        if (battleId == BattleConstant.NO_BATTLE) {
-            return false;
-        }
-
-        return this.battleId == battleId;
-    }
-
-    public int getBattleId() {
-        return battleId;
-    }
-
     @Override
     public Peer getPeer() {
         return peer;
@@ -136,10 +119,6 @@ public class AdminAuthentication implements IPeerAuthentication, ISerializable, 
      */
     public void setRole(int role) {
         this.role = role;
-    }
-
-    public void setBattleId(int battleId) {
-        this.battleId = battleId;
     }
 
     @Override

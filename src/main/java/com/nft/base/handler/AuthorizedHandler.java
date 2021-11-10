@@ -1,14 +1,12 @@
 package com.nft.base.handler;
 
-import com.zitga.bean.annotation.BeanField;
+import com.nft.authentication.model.AdminAuthentication;
+import com.nft.authentication.model.endPoint.AdminEndpoint;
+import com.nft.base.constant.LogicCode;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
 import com.zitga.core.constants.socket.DisconnectReason;
 import com.zitga.core.handler.socket.AbstractSocketHandler;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
-import com.nft.authentication.model.AdminAuthentication;
-import com.nft.authentication.model.endPoint.AdminEndpoint;
-import com.nft.authentication.service.AdminRoleService;
-import com.nft.base.constant.LogicCode;
 import io.netty.buffer.ByteBuf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +14,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AuthorizedHandler extends AbstractSocketHandler {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @BeanField
-    private AdminRoleService adminRoleService;
 
     @Override
     public void handle(HandlerContext context, int opCode, ByteBuf in, boolean isTcp) {

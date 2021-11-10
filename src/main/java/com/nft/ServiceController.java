@@ -1,6 +1,5 @@
 package com.nft;
 
-import com.nft.base.service.IdManagerService;
 import com.nft.executor.service.ExecutorService;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
@@ -17,9 +16,6 @@ public class ServiceController {
 
     // ---------------------------------------- Services ----------------------------------------
     @BeanField
-    private IdManagerService idManagerService;
-
-    @BeanField
     private ExecutorService executorService;
 
     @BeanField
@@ -34,10 +30,6 @@ public class ServiceController {
     }
 
     // ---------------------------------------- Getters ----------------------------------------
-    public IdManagerService getIdManager() {
-        return idManagerService;
-    }
-
     public JsonService getJsonService() {
         return jsonService;
     }
