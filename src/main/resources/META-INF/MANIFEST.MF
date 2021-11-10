@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.nft.Main
+Main-Class: com.zitga.Main
 Class-Path: log4j-core-2.13.3.jar jackson-dataformat-properties-2.11.0.j
  ar commons-codec-1.11.jar proxytoys-1.0.jar reflections-0.9.12.jar zitg
  a-dao.jar zitga-core.jar zitga-payment.jar jackson-core-2.11.0.jar cgli
