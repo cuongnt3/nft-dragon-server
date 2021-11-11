@@ -5,8 +5,8 @@ import com.zitga.bean.annotation.BeanField;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
 import com.zitga.core.handler.socket.support.ISocketConnectionListener;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
-import com.zitga.authentication.model.AdminAuthentication;
-import com.zitga.authentication.model.endPoint.AdminEndpoint;
+import com.zitga.authentication.model.PlayerAuthentication;
+import com.zitga.authentication.model.endPoint.PlayerEndpoint;
 import com.zitga.authentication.service.CachedAuthService;
 import com.zitga.authentication.service.HandshakeService;
 import com.zitga.publisher.model.battle.DisconnectListenerData;
@@ -40,8 +40,8 @@ public class ConnectionService implements ISocketConnectionListener {
 
         handshakeService.removeHandShake(context);
         IPeerAuthentication auth = context.getAuth();
-        AdminEndpoint adminEndpoint = (AdminEndpoint) auth;
-        AdminAuthentication adminAuth = adminEndpoint.getAdminAuth();
+        PlayerEndpoint playerEndpoint = (PlayerEndpoint) auth;
+        PlayerAuthentication adminAuth = playerEndpoint.getAdminAuth();
         logger.debug("Admin = {} DISCONNECTED", adminAuth.getUserName());
         cachedAuthService.removeFromCache(adminAuth);
 

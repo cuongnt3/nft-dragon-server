@@ -1,13 +1,17 @@
 package com.zitga.authentication.service;
 
-import com.zitga.authentication.dao.AdminAuthenticationDAO;
-import com.zitga.authentication.model.AdminAuthentication;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zitga.authentication.dao.PlayerAuthenticationDAO;
+import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.authentication.model.message.LoginResult;
 import com.zitga.base.constant.LogicCode;
-import com.zitga.config.GameConfig;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
-import com.zitga.core.handler.socket.support.context.HandlerContext;
+import com.zitga.config.GameConfig;
+import com.zitga.core.constants.http.HttpCode;
+import com.zitga.core.message.http.HttpResponse;
+import com.zitga.support.JsonService;
+import com.zitga.utils.GZipUtils;
 import com.zitga.utils.StringUtils;
 
 @BeanComponent
@@ -20,45 +24,32 @@ public class LoginService {
     private GameConfig gameConfig;
 
     @BeanField
-    private AdminAuthenticationDAO authDAO;
+    private JsonService jsonService;
 
-    public LoginResult loginByUserName(HandlerContext context, String userName, String hashedPassword, int version) {
+    @BeanField
+    private PlayerAuthenticationDAO authDAO;
+
+    public HttpResponse loginByUserName(PlayerAuthentication playerAuth) throws Exception {
         LoginResult result = new LoginResult();
-        userName = StringUtils.trim(userName);
-        if (StringUtils.isNullOrEmpty(userName)) {
-            return result.withCode(LogicCode.INVALID_INPUT_DATA);
+
+        String password = playerAuth.getCachedHashPassword();
+        if (StringUtils.isNullOrEmpty(password)){
+            return HttpResponse.error(HttpCode.FORBIDDEN, LogicCode.INVALID_INPUT_DATA);
         }
 
-        hashedPassword = StringUtils.trim(hashedPassword);
-        if (StringUtils.isNullOrEmpty(hashedPassword)) {
-            return result.withCode(LogicCode.INVALID_INPUT_DATA);
+        if (!playerAuth.checkPassword()) {
+            return HttpResponse.error(HttpCode.FORBIDDEN, LogicCode.AUTH_PASSWORD_NOT_MATCH);
         }
 
-        if (version != gameConfig.getVersion()) {
-            return result.withCode(LogicCode.AUTH_VERSION_MISMATCH);
-        }
+        onLoginSuccess(playerAuth);
 
-        AdminAuthentication adminAuth = authDAO.findWithUserName(userName);
-        if (adminAuth == null) {
-            return result.withCode(LogicCode.PLAYER_NOT_FOUND);
-        }
-
-        if (!adminAuth.comparePassword(hashedPassword)) {
-            return result.withCode(LogicCode.AUTH_PASSWORD_NOT_MATCH);
-        }
-
-        onLoginSuccess(context, adminAuth);
-        result.setPlayerId(adminAuth.getId());
-        return result.withCode(LogicCode.SUCCESS);
+        result.setPlayerId(playerAuth.getId());
+        String data = jsonService.writeValueAsString(result);
+        String zipData = GZipUtils.compress(data);
+        return HttpResponse.ok(zipData);
     }
 
-    private void onLoginSuccess(HandlerContext context, AdminAuthentication adminAuth) {
-        context.setAuth(adminAuth);
-
-        adminAuth.setPeer(context.getPeer());
-        adminAuth.setPeerAuthorized(true);
-        adminAuth.setAdminEndpoint(context);
-
+    private void onLoginSuccess(PlayerAuthentication adminAuth) {
         cachedAuthService.onAdminLogin(adminAuth);
     }
 }

@@ -11,7 +11,7 @@ import com.zitga.bean.ReflectionScanner;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
 import com.zitga.bean.annotation.BeanMethod;
-import com.zitga.authentication.model.AdminAuthentication;
+import com.zitga.authentication.model.PlayerAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +82,7 @@ public class PublisherService {
         listeners.add(listener);
     }
 
-    public void notifyListener(AdminAuthentication player, BaseListenerData data) {
+    public void notifyListener(PlayerAuthentication player, BaseListenerData data) {
         executorService.executeListenerTask(() -> {
             List<IListener> listeners = listenerMap.get(data.getSubjectType());
             if (listeners != null) {

@@ -1,7 +1,7 @@
 package com.zitga.base.handler;
 
-import com.zitga.authentication.model.AdminAuthentication;
-import com.zitga.authentication.model.endPoint.AdminEndpoint;
+import com.zitga.authentication.model.PlayerAuthentication;
+import com.zitga.authentication.model.endPoint.PlayerEndpoint;
 import com.zitga.base.constant.LogicCode;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
 import com.zitga.core.constants.socket.BaseDisconnectReason;
@@ -18,8 +18,8 @@ public abstract class AuthorizedHandler extends AbstractSocketHandler {
     @Override
     public void handle(HandlerContext context, int opCode, ByteBuf in, boolean isTcp) {
         IPeerAuthentication auth = context.getAuth();
-        if (auth instanceof AdminEndpoint) {
-            AdminAuthentication adminAuth = ((AdminEndpoint) auth).getAdminAuth();
+        if (auth instanceof PlayerEndpoint) {
+            PlayerAuthentication adminAuth = ((PlayerEndpoint) auth).getAdminAuth();
             try {
                 // Ignore isTcp param for now, as this game will be TCP-only
                 handle(adminAuth, opCode, in);
@@ -35,5 +35,5 @@ public abstract class AuthorizedHandler extends AbstractSocketHandler {
         }
     }
 
-    protected abstract void handle(AdminAuthentication adminAuth, int opCode, ByteBuf in) throws Exception;
+    protected abstract void handle(PlayerAuthentication adminAuth, int opCode, ByteBuf in) throws Exception;
 }

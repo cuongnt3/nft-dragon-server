@@ -1,34 +1,24 @@
 package com.zitga.authentication.model.message;
 
-import com.zitga.base.constant.LogicCode;
-import com.zitga.core.message.socket.ISerializable;
-import io.netty.buffer.ByteBuf;
-
-public class LoginResult implements ISerializable {
-
-    private int resultCode;
+public class LoginResult {
 
     private long playerId;
 
-    public LoginResult withCode(int logicCode) {
-        this.resultCode = logicCode;
+    private String data;
 
-        return this;
+    public long getPlayerId() {
+        return playerId;
     }
 
-    public int getResultCode() {
-        return resultCode;
+    public String getData() {
+        return data;
     }
 
     public void setPlayerId(long playerId) {
         this.playerId = playerId;
     }
 
-    @Override
-    public void serialize(ByteBuf out) {
-        out.writeShortLE(resultCode);
-        if (resultCode == LogicCode.SUCCESS) {
-            out.writeLongLE(playerId);
-        }
+    public void setData(String data) {
+        this.data = data;
     }
 }

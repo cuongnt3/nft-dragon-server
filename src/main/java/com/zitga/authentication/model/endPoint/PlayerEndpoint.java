@@ -1,15 +1,14 @@
 package com.zitga.authentication.model.endPoint;
 
-import com.zitga.authentication.model.AdminAuthentication;
+import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.core.authentication.socket.IPeerAuthentication;
-import com.zitga.core.constants.socket.BaseDisconnectReason;
 import com.zitga.core.handler.socket.support.context.HandlerContext;
 import com.zitga.core.handler.socket.support.context.Peer;
 import io.netty.buffer.ByteBuf;
 
-public class AdminEndpoint implements IPeerAuthentication {
+public class PlayerEndpoint implements IPeerAuthentication {
 
-    private AdminAuthentication adminAuth;
+    private PlayerAuthentication adminAuth;
 
     private Peer peer;
     private HandlerContext context;
@@ -18,11 +17,11 @@ public class AdminEndpoint implements IPeerAuthentication {
 
     private long lastDisconnect;
 
-    public AdminEndpoint(AdminAuthentication adminAuth) {
+    public PlayerEndpoint(PlayerAuthentication adminAuth) {
         this.adminAuth = adminAuth;
     }
 
-    public AdminEndpoint(AdminAuthentication adminAuth, HandlerContext context) {
+    public PlayerEndpoint(PlayerAuthentication adminAuth, HandlerContext context) {
         this.adminAuth = adminAuth;
         bindingWithSocket(context);
         this.context = context;
@@ -39,7 +38,7 @@ public class AdminEndpoint implements IPeerAuthentication {
         return isAuth;
     }
 
-    public AdminAuthentication getAdminAuth() {
+    public PlayerAuthentication getAdminAuth() {
         return adminAuth;
     }
 

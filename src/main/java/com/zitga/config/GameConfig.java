@@ -7,18 +7,22 @@ import org.slf4j.LoggerFactory;
 @BeanConfiguration("config/game.properties")
 public class GameConfig {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String apiVersion;
+    private String secretKey;
 
-    private int version;
+    public String getApiVersion() {
+        return apiVersion;
+    }
 
-    public int getVersion() {
-        return version;
+    public String getSecretKey() {
+        return secretKey;
     }
 
     @Override
     public String toString() {
         return "GameConfig{" +
-                "version=" + version +
+                "apiVersion='" + apiVersion + '\'' +
+                ", secretKey='" + secretKey + '\'' +
                 '}';
     }
 }
