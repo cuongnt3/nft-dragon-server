@@ -47,7 +47,7 @@ public class RegisterService {
         password = StringUtils.trim(password);
         userName = StringUtils.trim(userName);
 
-        String hashedSign = HashHelper.hashMD5(userName + password +
+        String hashedSign = HashHelper.hashSHA256(userName + password +
                 gameConfig.getApiVersion() + gameConfig.getSecretKey());
 
         if (!hashedSign.equalsIgnoreCase(sign)) {
