@@ -1,5 +1,6 @@
 package com.zitga;
 
+import com.zitga.base.service.IdGeneratorService;
 import com.zitga.executor.service.ExecutorService;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
@@ -21,6 +22,9 @@ public class ServiceController {
     @BeanField
     private JsonService jsonService;
 
+    @BeanField
+    private IdGeneratorService idGeneratorService;
+
     public ServiceController() {
         instance = this;
     }
@@ -32,5 +36,9 @@ public class ServiceController {
     // ---------------------------------------- Getters ----------------------------------------
     public JsonService getJsonService() {
         return jsonService;
+    }
+
+    public IdGeneratorService getIdGeneratorService() {
+        return idGeneratorService;
     }
 }

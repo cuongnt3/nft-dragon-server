@@ -38,4 +38,8 @@ public class IdGeneratorService {
 
         return TimeUtils.getCurrentTimeInMilisecond();
     }
+
+    public long generateDragonId() {
+        return startHeroId.getAndIncrement() + TimeUtils.getCurrentTimeInMilisecond();
+    }
 }

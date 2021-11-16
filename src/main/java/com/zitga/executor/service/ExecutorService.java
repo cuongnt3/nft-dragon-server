@@ -20,8 +20,10 @@ public class ExecutorService {
     private ScheduledThreadPoolExecutor executor;
 
     private final ThreadPoolExecutor playerExecutor;
+    private final ThreadPoolExecutor dbExecutor;
 
     public ExecutorService(SchedulerService schedulerService) {
+        dbExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
         executor = schedulerService.getSchedulerThreadGroup();
 
         playerExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
@@ -32,6 +34,10 @@ public class ExecutorService {
     }
 
     // ---------------------------------------- Executor helper ----------------------------------------
+    public void executeDbTask(Runnable runnable) {
+        dbExecutor.execute(runnable);
+    }
+
     public void scheduleRealtimeTask(Runnable runnable, int intervalInMiliSeconds) {
         executor.scheduleAtFixedRate(runnable, ExecutorConstant.START_DELAY, intervalInMiliSeconds, TimeUnit.MILLISECONDS);
     }
