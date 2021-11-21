@@ -30,6 +30,11 @@ public class PlayerDragonCollection extends BasePlayerComponent {
     // Key: id of egg in collection
     private final Map<Long, InventoryDragonEgg> dragonEggs = new ConcurrentHashMap<>();
 
+    @JsonProperty("2")
+    @Embedded(DragonTag.EGG_FRAGMENT_LIST_TAG)
+    // Key: egg fragment id
+    private final Map<Integer, Integer> eggFragments = new ConcurrentHashMap<>();
+
     @Transient
     @NotSaved
     private final Object dragonLock = new Object();
@@ -37,6 +42,10 @@ public class PlayerDragonCollection extends BasePlayerComponent {
     @Transient
     @NotSaved
     private final Object dragonEggLock = new Object();
+
+    @Transient
+    @NotSaved
+    private final Object eggFragmentLock = new Object();
 
     public PlayerDragonCollection() {
         // For serialize purpose
@@ -47,6 +56,19 @@ public class PlayerDragonCollection extends BasePlayerComponent {
     }
 
     // ---------------------------------------- Getters ----------------------------------------
+    public int getNumberDragons() {
+        return dragons.size();
+    }
+
+    public int getNumberEggs() {
+        return dragonEggs.size();
+    }
+
+    public InventoryDragonEgg getDragonEgg(long eggInventory) {
+        return dragonEggs.get(eggInventory);
+    }
+
+    // ---------------------------------------- Setters ----------------------------------------
     public void addDragon(InventoryDragon dragon) {
         synchronized (dragonLock) {
             dragons.put(dragon.getInventoryId(), dragon);
@@ -54,8 +76,21 @@ public class PlayerDragonCollection extends BasePlayerComponent {
     }
 
     public void addDragonEgg(InventoryDragonEgg egg) {
-        synchronized (dragonLock) {
+        synchronized (dragonEggLock) {
             dragonEggs.put(egg.getInventoryId(), egg);
+        }
+    }
+
+    public void addEggFragment(int eggFragmentId, int number) {
+        synchronized (eggFragmentLock) {
+            int currentNumber = eggFragments.getOrDefault(eggFragmentId, 0);
+            eggFragments.put(eggFragmentId, currentNumber + number);
+        }
+    }
+
+    public void removeDragonEgg(long inventoryId) {
+        synchronized (dragonEggLock) {
+            dragonEggs.remove(inventoryId);
         }
     }
 }

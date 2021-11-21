@@ -15,8 +15,8 @@ public class LazyLoadService {
     @BeanField
     private DragonService dragonService;
 
-    public void loadHeroSummon(Player player) {
-        summonService.loadHeroSummon(player);
+    public void loadDragonSummon(Player player) {
+        summonService.loadDragonSummon(player);
     }
 
     public void loadDragonCollection(Player player){

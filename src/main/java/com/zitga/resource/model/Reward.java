@@ -39,9 +39,9 @@ public class Reward {
         this.id = Integer.parseInt(csv.get(ResourceTag.RESOURCE_ID_TAG));
         this.number = Integer.parseInt(csv.get(ResourceTag.RESOURCE_NUMBER_TAG));
 
-        String heroStarString = csv.get(ResourceTag.RESOURCE_DATA_TAG);
-        if (!StringUtils.isNullOrEmpty(heroStarString)) {
-            this.data = Integer.parseInt(heroStarString);
+        String starString = csv.get(ResourceTag.RESOURCE_DATA_TAG);
+        if (!StringUtils.isNullOrEmpty(starString)) {
+            this.data = Integer.parseInt(starString);
         }
 
         ServiceController.instance().getRewardValidatorService().addRewardToValidate(this);

@@ -19,8 +19,8 @@ public class IdGeneratorService {
     @BeanField
     private PlayerAuthenticationDAO authenticationDAO;
 
-    private final AtomicLong startHeroId = new AtomicLong(0);
-    private final AtomicLong startTavernQuestId = new AtomicLong(0);
+    private final AtomicLong startDragonId = new AtomicLong(0);
+    private final AtomicLong startEggId = new AtomicLong(0);
 
     // ---------------------------------------- Setters ----------------------------------------
     public long generatePlayerId() {
@@ -40,6 +40,10 @@ public class IdGeneratorService {
     }
 
     public long generateDragonId() {
-        return startHeroId.getAndIncrement() + TimeUtils.getCurrentTimeInMilisecond();
+        return startDragonId.getAndIncrement() + TimeUtils.getCurrentTimeInMilisecond();
+    }
+
+    public long generateEggId() {
+        return startEggId.getAndIncrement() + TimeUtils.getCurrentTimeInMilisecond();
     }
 }

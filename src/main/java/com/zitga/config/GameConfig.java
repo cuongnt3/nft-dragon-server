@@ -10,6 +10,10 @@ public class GameConfig {
     private String apiVersion;
     private String secretKey;
 
+    private String csvPath;
+
+    private Boolean allowFakeData;
+
     public String getApiVersion() {
         return apiVersion;
     }
@@ -18,11 +22,21 @@ public class GameConfig {
         return secretKey;
     }
 
+    public String getCsvPath() {
+        return csvPath;
+    }
+
+    public Boolean getAllowFakeData() {
+        return allowFakeData;
+    }
+
     @Override
     public String toString() {
         return "GameConfig{" +
                 "apiVersion='" + apiVersion + '\'' +
                 ", secretKey='" + secretKey + '\'' +
+                ", csvPath='" + csvPath + '\'' +
+                ", allowFakeData=" + allowFakeData +
                 '}';
     }
 }

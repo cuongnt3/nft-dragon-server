@@ -41,6 +41,10 @@ public class InventoryDragonEgg {
         return inventoryId;
     }
 
+    public int getEggType() {
+        return eggType;
+    }
+
     @Override
     public InventoryDragonEgg clone() {
         InventoryDragonEgg result = new InventoryDragonEgg();

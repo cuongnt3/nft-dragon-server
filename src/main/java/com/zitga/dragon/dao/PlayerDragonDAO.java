@@ -14,20 +14,20 @@ public class PlayerDragonDAO extends ScheduledAsyncWriterMongoDAO<Long, PlayerDr
     }
 
     public PlayerDragonCollection create(Player player) {
-        PlayerDragonCollection heroCollection = new PlayerDragonCollection(player);
+        PlayerDragonCollection collection = new PlayerDragonCollection(player);
 
-        save(heroCollection);
-        return heroCollection;
+        save(collection);
+        return collection;
     }
 
     public PlayerDragonCollection findOrCreate(Player player) {
-        PlayerDragonCollection heroCollection = findOne(player.getPlayerId());
-        if (heroCollection != null) {
-            heroCollection.bindingWithPlayer(player);
+        PlayerDragonCollection collection = findOne(player.getPlayerId());
+        if (collection != null) {
+            collection.bindingWithPlayer(player);
         } else {
-            heroCollection = create(player);
+            collection = create(player);
         }
 
-        return heroCollection;
+        return collection;
     }
 }

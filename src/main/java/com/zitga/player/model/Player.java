@@ -3,6 +3,7 @@ package com.zitga.player.model;
 import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.base.service.LazyLoadService;
 import com.zitga.dragon.model.PlayerDragonCollection;
+import com.zitga.statistics.model.PlayerStatistics;
 import com.zitga.summon.model.PlayerDragonSummon;
 
 public class Player {
@@ -13,6 +14,8 @@ public class Player {
 
     private PlayerDragonSummon dragonSummon;
     private PlayerDragonCollection dragonCollection;
+
+    private PlayerStatistics statistics;
 
     private LazyLoadService lazyLoadService;
 
@@ -29,7 +32,7 @@ public class Player {
 
     public PlayerDragonSummon getOrLoadDragonSummon() {
         if (dragonSummon == null) {
-            lazyLoadService.loadHeroSummon(this);
+            lazyLoadService.loadDragonSummon(this);
         }
         return dragonSummon;
     }
@@ -41,6 +44,10 @@ public class Player {
         return dragonCollection;
     }
 
+    public PlayerStatistics getStatistics() {
+        return statistics;
+    }
+
     // ---------------------------------------- Setters ----------------------------------------
     public void setDragonSummon(PlayerDragonSummon dragonHatch){
         if (this.dragonSummon == null) {
@@ -48,9 +55,15 @@ public class Player {
         }
     }
 
-    public void setHeroCollection(PlayerDragonCollection dragonCollection) {
+    public void setDragonCollection(PlayerDragonCollection dragonCollection) {
         if (this.dragonCollection == null) {
             this.dragonCollection = dragonCollection;
+        }
+    }
+
+    public void setStatistics(PlayerStatistics statistics) {
+        if (this.statistics == null) {
+            this.statistics = statistics;
         }
     }
 }

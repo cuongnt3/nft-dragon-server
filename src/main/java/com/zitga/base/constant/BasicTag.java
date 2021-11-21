@@ -20,6 +20,7 @@ public class BasicTag {
     public static final String SERVER_ADDRESS_LAST_PLAYED_TAG = "server_address_last_played";
 
     public static final String GROUP_TAG = "group";
+    public static final String GROUP_RATE_TAG = "group_rate";
 
     public static final String LEVEL_TAG = "level";
     public static final String STAR_TAG = "star";
@@ -28,4 +29,6 @@ public class BasicTag {
     public static final String STAGE_TAG = "stage";
     public static final String API_VERSION = "api_version";
     public static final String INBOUND_HASH_TAG = "hash";
+
+    public static final String DURATION_TAG = "duration";
 }
