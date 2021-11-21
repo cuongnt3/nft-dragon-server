@@ -2,7 +2,8 @@ package com.zitga.player.model;
 
 import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.base.service.LazyLoadService;
-import com.zitga.hatch.model.PlayerDragonHatch;
+import com.zitga.dragon.model.PlayerDragonCollection;
+import com.zitga.summon.model.PlayerDragonSummon;
 
 public class Player {
 
@@ -10,8 +11,8 @@ public class Player {
 
     private PlayerAuthentication authentication;
 
-    private PlayerDragonHatch dragonHatch;
-
+    private PlayerDragonSummon dragonSummon;
+    private PlayerDragonCollection dragonCollection;
 
     private LazyLoadService lazyLoadService;
 
@@ -26,17 +27,30 @@ public class Player {
         return playerId;
     }
 
-    public PlayerDragonHatch getOrLoadDragonHatch() {
-        if (dragonHatch == null) {
+    public PlayerDragonSummon getOrLoadDragonSummon() {
+        if (dragonSummon == null) {
             lazyLoadService.loadHeroSummon(this);
         }
-        return dragonHatch;
+        return dragonSummon;
+    }
+
+    public PlayerDragonCollection getOrLoadDragon(){
+        if (dragonCollection == null) {
+            lazyLoadService.loadDragonCollection(this);
+        }
+        return dragonCollection;
     }
 
     // ---------------------------------------- Setters ----------------------------------------
-    public void setDragonHatch(PlayerDragonHatch dragonHatch){
-        if (this.dragonHatch == null) {
-            this.dragonHatch = dragonHatch;
+    public void setDragonSummon(PlayerDragonSummon dragonHatch){
+        if (this.dragonSummon == null) {
+            this.dragonSummon = dragonHatch;
+        }
+    }
+
+    public void setHeroCollection(PlayerDragonCollection dragonCollection) {
+        if (this.dragonCollection == null) {
+            this.dragonCollection = dragonCollection;
         }
     }
 }

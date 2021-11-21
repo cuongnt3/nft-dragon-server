@@ -2,7 +2,7 @@ package com.zitga.base.dao.dao;
 
 import com.zitga.base.service.MongoSaveScheduler;
 import com.zitga.bean.annotation.BeanDelayedField;
-import com.zitga.hatch.model.base.BasePlayerComponent;
+import com.zitga.base.model.BasePlayerComponent;
 import org.mongodb.morphia.Datastore;
 
 import java.io.Serializable;

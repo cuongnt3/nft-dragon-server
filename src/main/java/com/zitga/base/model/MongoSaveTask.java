@@ -1,7 +1,6 @@
 package com.zitga.base.model;
 
 import com.zitga.base.dao.dao.ScheduledAsyncWriterMongoDAO;
-import com.zitga.hatch.model.base.BasePlayerComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

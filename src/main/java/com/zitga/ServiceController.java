@@ -4,6 +4,7 @@ import com.zitga.base.service.IdGeneratorService;
 import com.zitga.executor.service.ExecutorService;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
+import com.zitga.resource.service.RewardValidatorService;
 import com.zitga.support.JsonService;
 
 @BeanComponent
@@ -25,6 +26,9 @@ public class ServiceController {
     @BeanField
     private IdGeneratorService idGeneratorService;
 
+    @BeanField
+    private RewardValidatorService rewardValidatorService;
+
     public ServiceController() {
         instance = this;
     }
@@ -40,5 +44,9 @@ public class ServiceController {
 
     public IdGeneratorService getIdGeneratorService() {
         return idGeneratorService;
+    }
+
+    public RewardValidatorService getRewardValidatorService() {
+        return rewardValidatorService;
     }
 }

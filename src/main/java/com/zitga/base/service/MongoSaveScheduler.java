@@ -8,7 +8,7 @@ import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
 import com.zitga.bean.annotation.BeanMethod;
 import com.zitga.bean.utils.BeanUtils;
-import com.zitga.hatch.model.base.BasePlayerComponent;
+import com.zitga.base.model.BasePlayerComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

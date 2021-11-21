@@ -47,6 +47,22 @@ public class InventoryDragon {
     }
 
     // ---------------------------------------- Getters ----------------------------------------
+    public long getInventoryId() {
+        return inventoryId;
+    }
+
+    public int getDragonId() {
+        return dragonId;
+    }
+
+    public int getStar() {
+        return star;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public InventoryDragon clone() {
         InventoryDragon result = new InventoryDragon();
@@ -56,5 +72,18 @@ public class InventoryDragon {
         result.level = level;
         result.items = new ConcurrentHashMap<>(items);
         return result;
+    }
+
+    // ---------------------------------------- Setters ----------------------------------------
+    public void setInventoryId(long inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public void setDragonId(int dragonId) {
+        this.dragonId = dragonId;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
     }
 }
