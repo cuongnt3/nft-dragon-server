@@ -9,13 +9,14 @@ import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.authentication.model.endPoint.PlayerEndpoint;
 import com.zitga.authentication.service.CachedAuthService;
 import com.zitga.authentication.service.HandshakeService;
+import com.zitga.player.model.Player;
 import com.zitga.publisher.model.battle.DisconnectListenerData;
 import com.zitga.publisher.service.PublisherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @BeanComponent
-public class ConnectionService implements ISocketConnectionListener {
+public class ConnectionService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -23,28 +24,7 @@ public class ConnectionService implements ISocketConnectionListener {
     private CachedAuthService cachedAuthService;
 
     @BeanField
-    private HandshakeService handshakeService;
-
-    @BeanField
     private PublisherService publisherService;
 
-    @Override
-    public void onConnected(HandlerContext context) {
-        logger.debug("[{}] Peer = {} CONNECTED", context.getPeer().getRemoteAddress(), context.getPeer().getId());
-        handshakeService.addHandshake(context);
-    }
-
-    @Override
-    public void onDisconnected(HandlerContext context) {
-        logger.debug("[{}] Peer = {} DISCONNECTED", context.getPeer().getRemoteAddress(), context.getPeer().getId());
-
-        handshakeService.removeHandShake(context);
-        IPeerAuthentication auth = context.getAuth();
-        PlayerEndpoint playerEndpoint = (PlayerEndpoint) auth;
-        PlayerAuthentication adminAuth = playerEndpoint.getAdminAuth();
-        logger.debug("Admin = {} DISCONNECTED", adminAuth.getUserName());
-        cachedAuthService.removeFromCache(adminAuth);
-
-        publisherService.notifyListener(adminAuth, new DisconnectListenerData());
-    }
+    // ---------------------------------------- Manage player connection ----------------------------------------
 }

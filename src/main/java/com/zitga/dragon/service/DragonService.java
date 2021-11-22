@@ -9,6 +9,7 @@ import com.zitga.dragon.model.InventoryDragonEgg;
 import com.zitga.dragon.model.PlayerDragonCollection;
 import com.zitga.enumeration.dragon.EggType;
 import com.zitga.enumeration.resource.ResourceType;
+import com.zitga.player.model.IAsyncPlayerDataManageable;
 import com.zitga.player.model.Player;
 import com.zitga.resource.annotation.RewardController;
 import com.zitga.resource.model.IRewardController;
@@ -20,12 +21,19 @@ import com.zitga.resource.model.Reward;
         ResourceType.EGG_FRAGMENT,
         ResourceType.EGG
 })
-public class DragonService implements IRewardController {
+public class DragonService implements IRewardController, IAsyncPlayerDataManageable {
 
     @BeanField
     private PlayerDragonDAO dragonDAO;
 
-    public void loadDragonCollection(Player player) {
+    @Override
+    public void createPlayerData(Player player) {
+        PlayerDragonCollection dragonCollection = dragonDAO.create(player);
+        player.setDragonCollection(dragonCollection);
+    }
+
+    @Override
+    public void loadPlayerData(Player player) {
         PlayerDragonCollection dragonCollection = dragonDAO.findOrCreate(player);
         player.setDragonCollection(dragonCollection);
     }

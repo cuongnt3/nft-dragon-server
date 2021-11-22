@@ -1,12 +1,15 @@
 package com.zitga.authentication.model;
 
+import com.zitga.authentication.constant.AuthConstant;
 import com.zitga.authentication.constant.AuthTag;
-import com.zitga.authentication.model.endPoint.PlayerEndpoint;
 import com.zitga.authentication.utils.AuthUtils;
 import com.zitga.base.constant.CollectionName;
 import com.zitga.core.authentication.IAuthorizedEntity;
-import com.zitga.core.handler.socket.support.context.HandlerContext;
+import com.zitga.utils.StringUtils;
+import com.zitga.utils.TimeUtils;
 import org.mongodb.morphia.annotations.*;
+
+import java.util.Date;
 
 @Entity(value = CollectionName.PLAYER_AUTHENTICATION, noClassnameStored = true)
 @Indexes({
@@ -17,10 +20,6 @@ public class PlayerAuthentication implements IAuthorizedEntity {
     @Id
     private long id;
 
-    @Transient
-    @NotSaved
-    private PlayerEndpoint playerEndpoint;
-
     @Property(AuthTag.USER_NAME_TAG)
     private String userName;
 
@@ -28,9 +27,20 @@ public class PlayerAuthentication implements IAuthorizedEntity {
     // password is hashed and salted
     private String password;
 
+    @Property(AuthTag.LAST_DEVICE_PLAYED_TAG)
+    private String lastDevicePlayed;
+
     @Transient
     @NotSaved
     private String cachedHashPassword;
+
+    @Transient
+    @NotSaved
+    private String cachedDeviceId;
+
+    @Transient
+    @NotSaved
+    private Date lastOnlineTime = TimeUtils.addDays(TimeUtils.getCurrentTimeInGMT(), -1);
 
     public PlayerAuthentication() {
         // for serialize purpose
@@ -47,16 +57,20 @@ public class PlayerAuthentication implements IAuthorizedEntity {
         return id;
     }
 
-    public PlayerEndpoint getEndpoint() {
-        return playerEndpoint;
-    }
-
     public String getUserName() {
         return userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public String getCachedHashPassword() {
         return cachedHashPassword;
+    }
+
+    public String getCachedDeviceId() {
+        return cachedDeviceId;
     }
 
     public boolean checkPassword() {
@@ -64,17 +78,39 @@ public class PlayerAuthentication implements IAuthorizedEntity {
         return password.equals(saltedPassword);
     }
 
+    public boolean checkValidDevice() {
+        if (StringUtils.isNullOrEmpty(lastDevicePlayed)) {
+            return true;
+        }
+
+        if (lastDevicePlayed.equals(cachedDeviceId)) {
+            return true;
+        }
+
+        Date expiredTime = TimeUtils.addSeconds(lastOnlineTime, AuthConstant.CHANGE_DEVICE_INTERVAL);
+        return TimeUtils.getCurrentTimeInGMT().after(expiredTime);
+    }
+
+    public boolean isHaveUserName() {
+        return !StringUtils.isNullOrEmpty(userName) && !StringUtils.isNullOrEmpty(password);
+    }
+
+    // ---------------------------------------- Setters ----------------------------------------
+    public void setPassword(String password) {
+        this.password = AuthUtils.calculateSaltedPassword(password);
+    }
+
     public void setCachedHashPassword(String cachedHashPassword) {
         this.cachedHashPassword = cachedHashPassword;
     }
 
-    // ---------------------------------------- Setters ----------------------------------------
-    public void setAdminEndpoint(HandlerContext context) {
-        this.playerEndpoint = new PlayerEndpoint(this, context);
+    public void setCachedDeviceId(String cachedDeviceId) {
+        this.cachedDeviceId = cachedDeviceId;
     }
 
-    public void setPassword(String password) {
-        this.password = AuthUtils.calculateSaltedPassword(password);
+    public void updateLastDevicePlayed() {
+        this.lastDevicePlayed = cachedDeviceId;
+        lastOnlineTime = TimeUtils.getCurrentTimeInGMT();
     }
 
     @Override

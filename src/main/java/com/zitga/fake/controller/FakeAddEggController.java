@@ -52,7 +52,7 @@ public class FakeAddEggController extends BaseFakeDataController {
         }
 
         if (player.getOrLoadDragon() == null) {
-            dragonService.loadDragonCollection(player);
+            dragonService.loadPlayerData(player);
         }
 
         if (dragonService.isFullEggCollection(player, fakeEggModel.getNumberEgg())) {

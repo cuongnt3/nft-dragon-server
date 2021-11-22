@@ -5,9 +5,7 @@ import com.zitga.core.constants.BaseLogicCode;
 public class LogicCode extends BaseLogicCode {
 
     public static final int AUTH_PASSWORD_NOT_MATCH = 20;
-    public static final int AUTH_VERSION_MISMATCH = 23;
-    public static final int AUTH_PASSWORD_MISMATCHED_LIMIT_REACHED = 24;
-    public static final int AUTH_PASSWORD_MISMATCHED = 25;
+    public static final int AUTH_ALREADY_LOGIN_OTHER_DEVICE = 21;
 
     public static final int AUTH_USERNAME_ALREADY_USED = 30;
     public static final int AUTH_USERNAME_FORMAT_INVALID = 31;

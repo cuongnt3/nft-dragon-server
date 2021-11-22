@@ -53,7 +53,7 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
         return LogicCode.SUCCESS;
     }
 
-    private PlayerAuthentication getPlayer(String userName, String password) {
+    private PlayerAuthentication getPlayer(String userName, String password, String deviceId) {
         userName = StringUtils.trim(userName);
         password = StringUtils.trim(password);
 
@@ -70,6 +70,7 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
         }
 
         playerAuth.setCachedHashPassword(password);
+        playerAuth.setCachedDeviceId(deviceId);
         return playerAuth;
     }
 
@@ -83,6 +84,7 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
 
         String userName = StringUtils.trim((String) params.get(AuthTag.USER_NAME_TAG));
         String password = StringUtils.trim((String) params.get(AuthTag.PASSWORD_TAG));
+        String deviceId = StringUtils.trim((String) params.get(AuthTag.DEVICE_ID_TAG));
 
         String hash = StringUtils.trim(headers.get(AuthTag.SIGN_TAG));
 
@@ -91,6 +93,6 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
             return null;
         }
 
-        return getPlayer(userName, password);
+        return getPlayer(userName, password, deviceId);
     }
 }

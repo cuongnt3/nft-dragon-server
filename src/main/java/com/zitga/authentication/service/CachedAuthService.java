@@ -3,6 +3,8 @@ package com.zitga.authentication.service;
 import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.core.constants.socket.BaseDisconnectReason;
+import com.zitga.enumeration.auth.AuthMethod;
+import com.zitga.player.model.Player;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,46 +12,38 @@ import java.util.concurrent.ConcurrentHashMap;
 @BeanComponent
 public class CachedAuthService {
 
-    // key: id of admin
-    private Map<Long, PlayerAuthentication> cachedAuthMap = new ConcurrentHashMap<>();
+    // key: AuthMethod + userName + password
+    private final Map<String, PlayerAuthentication> cachedAuthMap = new ConcurrentHashMap<>();
 
-    public PlayerAuthentication getAdminAuthentication(long id) {
-        return cachedAuthMap.get(id);
-    }
-
-    public PlayerAuthentication getAdminAuthentication(String username) {
-        for (PlayerAuthentication authentication : cachedAuthMap.values()) {
-            if (authentication.getUserName().equals(username)) {
-                return authentication;
-            }
-        }
-
-        return null;
-    }
-
+    // ---------------------------------------- Getters ----------------------------------------
     public PlayerAuthentication getFromCacheByUserName(String userName, String password) {
-        String cachedKey = getCachedKey(userName, password);
+        String cachedKey = getCachedKey(userName);
         return cachedAuthMap.get(cachedKey);
     }
 
-    private String getCachedKey(String userName, String password) {
-        return String.format("%s_%s", userName, password);
+    private String getCachedKey(String userName) {
+        return String.format("%s_%s", AuthMethod.LOGIN_BY_USER_NAME, userName);
     }
 
-    public void addToCache(PlayerAuthentication adminAuth) {
-        cachedAuthMap.put(adminAuth.getId(), adminAuth);
-    }
+    // ---------------------------------------- Setters ----------------------------------------
+    public void addToCache(Player player) {
+        PlayerAuthentication auth = player.getAuthentication();
+        if (auth != null) {
+            if (auth.isHaveUserName()) {
 
-    public void onAdminLogin(PlayerAuthentication adminAuth) {
-        PlayerAuthentication currentAdminLogin = cachedAuthMap.get(adminAuth.getId());
-        if (currentAdminLogin != null) {
-            currentAdminLogin.getEndpoint().disconnect(BaseDisconnectReason.ANOTHER_DEVICE_LOGIN);
+                String key = getCachedKey(auth.getUserName());
+                cachedAuthMap.put(key, auth);
+            }
         }
-
-        addToCache(adminAuth);
     }
 
-    public void removeFromCache(PlayerAuthentication adminAuth) {
-        cachedAuthMap.remove(adminAuth.getId());
+    public void removeFromCache(Player player) {
+        PlayerAuthentication auth = player.getAuthentication();
+        if (auth != null) {
+            if (auth.isHaveUserName()) {
+                String key = getCachedKey(auth.getUserName());
+                cachedAuthMap.remove(key, auth);
+            }
+        }
     }
 }

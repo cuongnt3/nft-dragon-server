@@ -1,5 +1,6 @@
 package com.zitga.player.model;
 
+import com.zitga.authentication.basicInfo.model.PlayerBasicInfo;
 import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.base.service.LazyLoadService;
 import com.zitga.dragon.model.PlayerDragonCollection;
@@ -12,6 +13,8 @@ public class Player {
 
     private PlayerAuthentication authentication;
 
+    private PlayerBasicInfo basicInfo;
+
     private PlayerDragonSummon dragonSummon;
     private PlayerDragonCollection dragonCollection;
 
@@ -19,15 +22,22 @@ public class Player {
 
     private LazyLoadService lazyLoadService;
 
-    public Player(PlayerAuthentication authentication, long playerId) {
+    public Player(PlayerAuthentication authentication) {
         this.authentication = authentication;
-        this.playerId = playerId;
-
+        this.playerId = authentication.getId();
     }
 
     // ---------------------------------------- Getters ----------------------------------------
     public long getPlayerId() {
         return playerId;
+    }
+
+    public PlayerAuthentication getAuthentication() {
+        return authentication;
+    }
+
+    public PlayerBasicInfo getBasicInfo() {
+        return basicInfo;
     }
 
     public PlayerDragonSummon getOrLoadDragonSummon() {
@@ -37,10 +47,7 @@ public class Player {
         return dragonSummon;
     }
 
-    public PlayerDragonCollection getOrLoadDragon(){
-        if (dragonCollection == null) {
-            lazyLoadService.loadDragonCollection(this);
-        }
+    public PlayerDragonCollection getOrLoadDragon() {
         return dragonCollection;
     }
 
@@ -48,8 +55,18 @@ public class Player {
         return statistics;
     }
 
-    // ---------------------------------------- Setters ----------------------------------------
-    public void setDragonSummon(PlayerDragonSummon dragonHatch){
+    // ---------------------------------------- Setters ----------------------------------------\
+    public void setBasicInfo(PlayerBasicInfo basicInfo) {
+        if (basicInfo == null) {
+            this.basicInfo = basicInfo;
+        }
+    }
+
+    public void replaceAuth(PlayerAuthentication authentication) {
+        this.authentication = authentication;
+    }
+
+    public void setDragonSummon(PlayerDragonSummon dragonHatch) {
         if (this.dragonSummon == null) {
             this.dragonSummon = dragonHatch;
         }

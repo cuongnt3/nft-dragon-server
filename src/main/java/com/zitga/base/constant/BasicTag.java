@@ -26,6 +26,8 @@ public class BasicTag {
     public static final String STAR_TAG = "star";
     public static final String EXP_TAG = "exp";
 
+    public static final String SLICE_TAG = "slice";
+
     public static final String STAGE_TAG = "stage";
     public static final String API_VERSION = "api_version";
     public static final String INBOUND_HASH_TAG = "hash";
