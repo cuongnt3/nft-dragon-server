@@ -17,4 +17,8 @@ public class AuthConstant {
     public static final int USER_NAME_LENGTH_MAX = 20;
 
     public static final int CHANGE_DEVICE_INTERVAL = 1800;
+
+    // authorized
+    public static final int DEVICE_ID = 1;
+    public static final int HASH_PASSWORD = 2;
 }

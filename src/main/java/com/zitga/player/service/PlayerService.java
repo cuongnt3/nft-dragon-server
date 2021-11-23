@@ -57,7 +57,6 @@ public class PlayerService {
     public Player loadPlayer(PlayerAuthentication authentication) throws Exception {
         Player player = cachedPlayerService.getPlayer(authentication.getId());
         if (player == null) {
-
             PlayerBasicInfo basicInfo = basicInfoDAO.findOne(authentication.getId());
             if (basicInfo == null){
                 player = createPlayerComponents(authentication);

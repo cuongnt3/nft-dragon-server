@@ -9,6 +9,8 @@ import com.zitga.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,14 +35,19 @@ public class CachedPlayerService implements Runnable {
 
             long currentTime = TimeUtils.getCurrentTimeInSecond();
 
-//            for (Player player : removePlayers) {
-//                player.disconnect(DisconnectReason.IDLE_TIMEOUT);
-//                removeFromCache(player);
-//                logger.debug("Remove player {} because of pending timeout", player.getPlayerId());
-//            }
-//
-//            logger.info("[CACHED] Cached players = {}, pending players = {}",
-//                    cachedPlayers.size(), pendingPlayers.size());
+            List<Player> removePlayers = new ArrayList<>();
+            for (Player player : cachedPlayers.values()) {
+                if (currentTime - TimeUtils.toSecond(player.getAuthentication().getLastOnlineTime()) > pendingTimeOut) {
+                    removePlayers.add(player);
+                }
+            }
+
+            for (Player player : removePlayers) {
+                removeFromCache(player);
+                logger.debug("Remove player {} because of pending timeout", player.getPlayerId());
+            }
+
+            logger.info("[CACHED] Cached players = {}", cachedPlayers.size());
         } catch (Throwable e) {
             logger.error(e.getMessage(), e);
         }

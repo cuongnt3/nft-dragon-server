@@ -1,6 +1,6 @@
-package com.zitga.fake.model;
+package com.zitga.fake.model.type;
 
-public class FakeResourceModel {
+public class FakeResourceData {
 
     private int resourceType;
 

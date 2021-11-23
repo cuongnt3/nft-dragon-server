@@ -1,5 +1,6 @@
 package com.zitga.authentication.service;
 
+import com.zitga.authentication.constant.AuthConstant;
 import com.zitga.authentication.constant.AuthTag;
 import com.zitga.authentication.dao.PlayerAuthenticationDAO;
 import com.zitga.authentication.model.PlayerAuthentication;
@@ -69,8 +70,8 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
             }
         }
 
-        playerAuth.setCachedHashPassword(password);
-        playerAuth.setCachedDeviceId(deviceId);
+        playerAuth.setAuthToken(AuthConstant.HASH_PASSWORD, password);
+        playerAuth.setAuthToken(AuthConstant.DEVICE_ID, deviceId);
         return playerAuth;
     }
 

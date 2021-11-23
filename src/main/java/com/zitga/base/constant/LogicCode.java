@@ -29,6 +29,10 @@ public class LogicCode extends BaseLogicCode {
     public static final int WRONG_INBOUND_HASH = 510;
     public static final int INVALID_INBOUND_HASH = 511;
 
+    public static final int INVALID_PLAYER_TOKEN = 520;
+    public static final int WRONG_PLAYER_TOKEN = 521;
+    public static final int PLAYER_NOT_IN_CACHE = 522;
+
     // fake
     public static final int FAKE_FORBIDDEN = 1000;
 }

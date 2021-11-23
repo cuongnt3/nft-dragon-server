@@ -10,6 +10,8 @@ import com.zitga.utils.TimeUtils;
 import org.mongodb.morphia.annotations.*;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Entity(value = CollectionName.PLAYER_AUTHENTICATION, noClassnameStored = true)
 @Indexes({
@@ -32,15 +34,15 @@ public class PlayerAuthentication implements IAuthorizedEntity {
 
     @Transient
     @NotSaved
-    private String cachedHashPassword;
-
-    @Transient
-    @NotSaved
-    private String cachedDeviceId;
-
-    @Transient
-    @NotSaved
     private Date lastOnlineTime = TimeUtils.addDays(TimeUtils.getCurrentTimeInGMT(), -1);
+
+    @Transient
+    @NotSaved
+    private Date recentLoginTime;
+
+    @Transient
+    @NotSaved
+    private Map<Integer, String> authorizedDataMap = new ConcurrentHashMap<>();
 
     public PlayerAuthentication() {
         // for serialize purpose
@@ -65,16 +67,12 @@ public class PlayerAuthentication implements IAuthorizedEntity {
         return password;
     }
 
-    public String getCachedHashPassword() {
-        return cachedHashPassword;
-    }
-
-    public String getCachedDeviceId() {
-        return cachedDeviceId;
+    public Date getRecentLoginTime() {
+        return recentLoginTime;
     }
 
     public boolean checkPassword() {
-        String saltedPassword = AuthUtils.calculateSaltedPassword(cachedHashPassword);
+        String saltedPassword = AuthUtils.calculateSaltedPassword(getAuthToken(AuthConstant.HASH_PASSWORD));
         return password.equals(saltedPassword);
     }
 
@@ -83,12 +81,21 @@ public class PlayerAuthentication implements IAuthorizedEntity {
             return true;
         }
 
-        if (lastDevicePlayed.equals(cachedDeviceId)) {
+        String cacheDeviceId = getAuthToken(AuthConstant.DEVICE_ID);
+        if (StringUtils.isNullOrEmpty(cacheDeviceId)){
+            return false;
+        }
+
+        if (lastDevicePlayed.equals(cacheDeviceId)) {
             return true;
         }
 
         Date expiredTime = TimeUtils.addSeconds(lastOnlineTime, AuthConstant.CHANGE_DEVICE_INTERVAL);
         return TimeUtils.getCurrentTimeInGMT().after(expiredTime);
+    }
+
+    public Date getLastOnlineTime() {
+        return lastOnlineTime;
     }
 
     public boolean isHaveUserName() {
@@ -100,25 +107,19 @@ public class PlayerAuthentication implements IAuthorizedEntity {
         this.password = AuthUtils.calculateSaltedPassword(password);
     }
 
-    public void setCachedHashPassword(String cachedHashPassword) {
-        this.cachedHashPassword = cachedHashPassword;
-    }
-
-    public void setCachedDeviceId(String cachedDeviceId) {
-        this.cachedDeviceId = cachedDeviceId;
-    }
-
     public void updateLastDevicePlayed() {
-        this.lastDevicePlayed = cachedDeviceId;
+        this.lastDevicePlayed = getAuthToken(AuthConstant.DEVICE_ID);
         lastOnlineTime = TimeUtils.getCurrentTimeInGMT();
+        recentLoginTime = TimeUtils.getCurrentTimeInGMT();
     }
 
     @Override
-    public String getAuthToken(int authProvider) {
-        return userName;
+    public String getAuthToken(int key) {
+        return authorizedDataMap.get(key);
     }
 
     @Override
-    public void setAuthToken(int authProvider, String authToken) {
+    public void setAuthToken(int key, String data) {
+        authorizedDataMap.put(key, data);
     }
 }
