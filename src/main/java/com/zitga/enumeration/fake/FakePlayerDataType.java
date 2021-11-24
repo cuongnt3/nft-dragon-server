@@ -7,6 +7,7 @@ public enum FakePlayerDataType {
     ADD_DRAGON(0),
     ADD_EGG(1),
     ADD_EGG_FRAGMENT(2),
+    RESOURCE(3),
     ;
 
     private static final Map<Integer, FakePlayerDataType> fakePlayerDataTypeMap = new ConcurrentHashMap<>();

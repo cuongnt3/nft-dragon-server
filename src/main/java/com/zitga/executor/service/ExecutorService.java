@@ -1,5 +1,6 @@
 package com.zitga.executor.service;
 
+import com.zitga.base.model.MongoSaveTask;
 import com.zitga.base.service.MongoSaveScheduler;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
@@ -7,7 +8,9 @@ import com.zitga.core.scheduler.SchedulerService;
 import com.zitga.executor.constant.ExecutorConstant;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -43,6 +46,10 @@ public class ExecutorService {
     }
 
     public void init() {
+        Set<MongoSaveTask> tasks = new HashSet<>(mongoSaveScheduler.getTaskMap().values());
+        for (MongoSaveTask task : tasks) {
+            scheduleTask(task, ExecutorConstant.ONE_MINUTE_INTERVAL);
+        }
     }
 
     // ---------------------------------------- Schedule ----------------------------------------

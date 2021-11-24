@@ -52,19 +52,12 @@ public class FakePlayerDataService {
         }
     }
 
-    public int fakeData(Player player, int fakeType, String fakeData) {
+    public int fakeData(Player player, FakePlayerDataType fakeType, String fakeData){
         int resultCode = LogicCode.SUCCESS;
 
-        try {
-            FakePlayerDataType dataType = FakePlayerDataType.toFakePlayerDataType(fakeType);
-
-            BaseFakeDataController controller = fakeDataControllerMap.get(dataType);
-            if (controller != null) {
-                resultCode = controller.fakeData(player, dataType, fakeData);
-            }
-        } catch (
-                Exception e) {
-            logger.error(e.getMessage(), e);
+        BaseFakeDataController controller = fakeDataControllerMap.get(fakeType);
+        if (controller != null) {
+            resultCode = controller.fakeData(player, fakeType, fakeData);
         }
 
         return resultCode;

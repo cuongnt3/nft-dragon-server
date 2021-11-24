@@ -16,17 +16,17 @@ import com.zitga.core.constants.http.HttpMethod;
 import com.zitga.core.message.http.HttpResponse;
 import com.zitga.enumeration.fake.FakePlayerDataType;
 import com.zitga.fake.constant.FakeRoute;
-import com.zitga.fake.model.FakeData;
 import com.zitga.fake.service.FakePlayerDataService;
 import com.zitga.player.constant.PlayerConstant;
 import com.zitga.player.model.Player;
 import com.zitga.player.model.authorized.ErrorAuthorizedResult;
 import com.zitga.player.service.PlayerAuthorizedService;
+import com.zitga.resource.model.Reward;
 import com.zitga.support.JsonService;
 
 @HttpController(FakeRoute.HTTP_FAKE_ROUTE)
 @BeanComponent
-public class FakePlayerDataHandler {
+public class FakeResourceHandler {
 
     @BeanField
     private GameConfig gameConfig;
@@ -37,7 +37,7 @@ public class FakePlayerDataHandler {
     @BeanField
     private JsonService jsonService;
 
-    @HttpRoute(value = FakeRoute.HTTP_PLAYER_ROUTE, method = HttpMethod.POST)
+    @HttpRoute(value = FakeRoute.HTTP_RESOURCE_ROUTE, method = HttpMethod.POST)
     @HttpFilter(LoginHttpHandler.class)
     @HttpAuthorizeHandler(value = PlayerAuthorizedService.class, isCreateNewUser = false)
     public HttpResponse handle(@HttpAuthorizedEntity IAuthorizedEntity authorizedEntity) {
@@ -47,10 +47,7 @@ public class FakePlayerDataHandler {
                 try {
                     Player player = (Player) authorizedEntity;
                     String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
-
-                    FakeData fakeData = jsonService.readValue(data, FakeData.class);
-
-                    int resultCode = fakeDataService.fakeData(player, fakeData.getFakeType(), fakeData.getData());
+                    int resultCode = fakeDataService.fakeData(player, FakePlayerDataType.RESOURCE, data);
                     if (resultCode == LogicCode.SUCCESS) {
                         return HttpResponse.ok();
                     } else {
