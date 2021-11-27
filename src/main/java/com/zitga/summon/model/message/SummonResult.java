@@ -1,5 +1,6 @@
 package com.zitga.summon.model.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zitga.dragon.model.InventoryDragon;
 import com.zitga.resource.model.Reward;
 
@@ -12,6 +13,7 @@ public class SummonResult {
     private Reward reward;
 
     // ---------------------------------------- Getters ----------------------------------------
+    @JsonIgnore
     public int getResultCode() {
         return resultCode;
     }

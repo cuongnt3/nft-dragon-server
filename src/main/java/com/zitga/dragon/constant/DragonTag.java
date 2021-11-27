@@ -9,4 +9,5 @@ public class DragonTag {
     public static final String DRAGON_ITEM_TAG = "dragon_item";
 
     public static final String RECEIVE_TIME_TAG = "receive_time";
+    public static final String EGG_TYPE_TAG = "egg_type";
 }

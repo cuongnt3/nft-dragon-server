@@ -1,6 +1,7 @@
 package com.zitga;
 
 import com.zitga.base.service.IdGeneratorService;
+import com.zitga.base.service.LazyLoadService;
 import com.zitga.executor.service.ExecutorService;
 import com.zitga.bean.annotation.BeanComponent;
 import com.zitga.bean.annotation.BeanField;
@@ -29,6 +30,9 @@ public class ServiceController {
     @BeanField
     private RewardValidatorService rewardValidatorService;
 
+    @BeanField
+    private LazyLoadService lazyLoadService;
+
     public ServiceController() {
         instance = this;
     }
@@ -48,5 +52,9 @@ public class ServiceController {
 
     public RewardValidatorService getRewardValidatorService() {
         return rewardValidatorService;
+    }
+
+    public LazyLoadService getLazyLoadService() {
+        return lazyLoadService;
     }
 }

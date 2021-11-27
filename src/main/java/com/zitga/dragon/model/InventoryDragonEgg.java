@@ -19,7 +19,7 @@ public class InventoryDragonEgg {
     private long inventoryId; // id of hero in inventory
 
     @JsonProperty("1")
-    @Property(DragonTag.DRAGON_ID_TAG)
+    @Property(DragonTag.EGG_TYPE_TAG)
     private int eggType;
 
     @JsonProperty("2")

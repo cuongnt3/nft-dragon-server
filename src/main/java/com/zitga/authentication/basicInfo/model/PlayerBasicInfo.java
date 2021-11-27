@@ -65,6 +65,8 @@ public class PlayerBasicInfo extends BasePlayerComponent {
     }
 
     public PlayerBasicInfo(Player player) {
+        super(player);
+
         this.name = String.format("Player_%s", player.getPlayerId());
         this.lowerName = name.toLowerCase();
 

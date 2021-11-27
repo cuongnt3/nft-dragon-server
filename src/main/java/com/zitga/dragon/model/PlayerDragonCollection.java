@@ -56,14 +56,17 @@ public class PlayerDragonCollection extends BasePlayerComponent {
     }
 
     // ---------------------------------------- Getters ----------------------------------------
+    @JsonIgnore
     public int getNumberDragons() {
         return dragons.size();
     }
 
+    @JsonIgnore
     public int getNumberEggs() {
         return dragonEggs.size();
     }
 
+    @JsonIgnore
     public InventoryDragonEgg getDragonEgg(long eggInventory) {
         return dragonEggs.get(eggInventory);
     }

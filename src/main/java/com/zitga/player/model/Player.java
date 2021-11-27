@@ -1,5 +1,6 @@
 package com.zitga.player.model;
 
+import com.zitga.ServiceController;
 import com.zitga.authentication.basicInfo.model.PlayerBasicInfo;
 import com.zitga.authentication.model.PlayerAuthentication;
 import com.zitga.base.service.LazyLoadService;
@@ -32,6 +33,8 @@ public class Player implements IAuthorizedEntity {
     public Player(PlayerAuthentication authentication) {
         this.authentication = authentication;
         this.playerId = authentication.getId();
+
+        this.lazyLoadService = ServiceController.instance().getLazyLoadService();
     }
 
     // ---------------------------------------- Getters ----------------------------------------
