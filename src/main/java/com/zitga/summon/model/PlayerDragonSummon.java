@@ -1,6 +1,7 @@
 package com.zitga.summon.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zitga.base.constant.BasicTag;
 import com.zitga.base.constant.CollectionName;
 import com.zitga.base.model.BasePlayerComponent;
@@ -24,6 +25,7 @@ public class PlayerDragonSummon extends BasePlayerComponent {
     @Property(BasicTag.DOCUMENT_VERSION_TAG)
     private long documentVersion;
 
+    @JsonProperty("0")
     @Embedded(SummonTag.START_HATCH_TIME_TAG)
     // key: inventory of egg
     private final Map<Long, Date> startHatchTimeMap = new ConcurrentHashMap<>();
@@ -43,6 +45,7 @@ public class PlayerDragonSummon extends BasePlayerComponent {
     }
 
     // ---------------------------------------- Getters ----------------------------------------
+    @JsonIgnore
     public Date getStartHatchTime(long eggInventoryId) {
         return startHatchTimeMap.get(eggInventoryId);
     }

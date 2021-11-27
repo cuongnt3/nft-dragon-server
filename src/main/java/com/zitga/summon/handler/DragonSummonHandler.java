@@ -43,7 +43,6 @@ public class DragonSummonHandler {
     public HttpResponse handle(@HttpAuthorizedEntity IAuthorizedEntity authorizedEntity) {
         if (gameConfig.getAllowFakeData()) {
             if (authorizedEntity instanceof Player) {
-
                 try {
                     Player player = (Player) authorizedEntity;
                     String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);

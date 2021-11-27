@@ -36,14 +36,15 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
     @BeanField
     private GameConfig gameConfig;
 
-    private int validateHash(SocketAddress senderAddress, String route, String username, String hashedPassword, String hash) {
+    private int validateHash(SocketAddress senderAddress, String route, String username, String hashedPassword,
+                             String deviceId, String hash) {
         if (StringUtils.isNullOrEmpty(hash)) {
             logger.debug("[{}] Invalid hash sha256, received={}, sender={}",
                     route, hash, senderAddress);
             return LogicCode.INVALID_INBOUND_HASH;
         }
 
-        String serverHash = HashHelper.hashSHA256(username + hashedPassword + gameConfig.getApiVersion() +
+        String serverHash = HashHelper.hashSHA256(username + hashedPassword + deviceId + gameConfig.getApiVersion() +
                 gameConfig.getSecretKey());
         if (!serverHash.equals(hash)) {
             logger.debug("[{}] Invalid hash sha256, received={}, expected={} sender={}",
@@ -89,7 +90,7 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
 
         String hash = StringUtils.trim(headers.get(AuthTag.SIGN_TAG));
 
-        int validateHashResult = validateHash(senderAddress, route, userName, password, hash);
+        int validateHashResult = validateHash(senderAddress, route, userName, password, deviceId, hash);
         if (validateHashResult != LogicCode.SUCCESS) {
             return null;
         }
