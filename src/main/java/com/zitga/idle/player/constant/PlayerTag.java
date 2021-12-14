@@ -1,0 +1,7 @@
+package com.zitga.idle.player.constant;
+
+public class PlayerTag {
+
+    public static final String PLAYER_TOKEN_TAG = "token";
+    public static final String PLAYER_DATA_TAG = "data";
+}

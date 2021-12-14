@@ -1,0 +1,220 @@
+package com.zitga.idle.enumeration.quest;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public enum QuestType {
+
+    // hero
+    HERO_COLLECT(100),
+    HERO_EVOLVE(101),
+    HERO_LEVEL_UP(102),
+    HERO_LEVEL_UP_MAX(103),
+    HERO_DISASSEMBLE(104),
+    HERO_RESET(105),
+
+    HERO_COLLECT_BASE_STAR(150),
+    HERO_COLLECT_ALL_BASE_STAR(151),
+    HERO_COLLECT_BASE_ID(152),
+
+    FEATURE_UNLOCK(190),
+
+    // hand of midas
+    HAND_OF_MIDAS_USE(200),
+    HAND_OF_MIDAS_USE_CONSECUTIVE_ACHIEVEMENT(201),
+
+    // tavern
+    TAVERN_QUEST_COMPLETE(300),
+
+    // arena
+    ARENA_CHALLENGE(400),
+    ARENA_WIN(401),
+    ARENA_ELO_REACH(402),
+    ARENA_CONSECUTIVE_CHALLENGE(403),
+
+    // arena team
+    ARENA_TEAM_CHALLENGE(450),
+    ARENA_TEAM_WIN(451),
+    ARENA_TEAM_ELO_REACH(452),
+    ARENA_TEAM_CONSECUTIVE_CHALLENGE(453),
+
+    // arena common
+    ARENA_COMMON_CHALLENGE(460),
+
+    // campaign
+    CAMPAIGN_STAGE_PASS(500),
+    CAMPAIGN_CLAIM_IDLE_REWARD(501),
+    CAMPAIGN_CLAIM_GOLD(503),
+    CAMPAIGN_AUTO_TRAIN_TIME(504),
+    CAMPAIGN_CHALLENGE(505),
+    CAMPAIGN_CONSECUTIVE_CHALLENGE(506),
+    CAMPAIGN_QUICK_BATTLE(507),
+
+    // casino
+    CASINO_SPIN_HERO_FRAGMENT(600),
+    CASINO_SPIN_MONEY(601),
+
+    CASINO_SPIN_HERO_FRAGMENT_WITHOUT_ACHIEVEMENT(650),
+    CASINO_SPIN_MONEY_WITHOUT_ACHIEVEMENT(651),
+
+    // market
+    MARKET_BUY_HERO_FRAGMENT(700),
+    MARKET_BUY_MONEY(701),
+
+    MARKET_SPEND(750),
+    MARKET_REFRESH(751),
+
+    // guild
+    GUILD_JOIN(800),
+    GUILD_BOSS_CHALLENGE(801),
+    GUILD_BOSS_CHALLENGE_CONSECUTIVE_ACHIEVEMENT(802),
+    GUILD_BOSS_ALL_DAMAGE_REACH(803),
+
+    GUILD_DUNGEON_STAGE_CHALLENGE(820),
+    GUILD_DUNGEON_SEASON_COMPLETE(821),
+    GUILD_DUNGEON_CHALLENGE(822),
+
+    GUILD_CHECK_IN(830),
+
+    GUILD_MARKET_BUY(841),
+
+    // item
+    EQUIPMENT_COLLECT(900),
+    EQUIPMENT_EQUIP(901),
+    EQUIPMENT_UPGRADE(902),
+
+    EQUIPMENT_SET_COLLECT(950),
+
+    // summoner
+    SUMMONER_LEVEL_UP(1000),
+    SUMMONER_EVOLVE(1001),
+
+    // prophet tree
+    PROPHET_TREE_SUMMON(1100),
+    PROPHET_TREE_CONVERT(1101),
+
+    PROPHET_TREE_SUMMON_WITHOUT_ACHIEVEMENT(1150),
+
+    // friend
+    FRIEND_COUNT(1200),
+    FRIEND_POINT_SEND(1201),
+    FRIEND_POINT_RECEIVE(1202),
+
+    FRIEND_BOSS_SCOUT(1250),
+    FRIEND_BOSS_CLEAR(1251),
+
+    // stone
+    STONE_UNLOCK(1300),
+    STONE_UPGRADE(1301),
+    STONE_CONVERT(1302),
+
+    // artifact
+    ARTIFACT_COLLECT(1400),
+    ARTIFACT_EQUIP(1401),
+    ARTIFACT_UPGRADE(1402),
+
+    // login
+    LOGIN_CONSECUTIVE_ACHIEVEMENT(1500),
+    LOGIN_DAILY(1501),
+
+    // tower
+    TOWER_STAGE_PASS(1600),
+    TOWER_CHALLENGE(1601),
+    TOWER_CHALLENGE_CONSECUTIVE(1602),
+
+    // summon
+    SUMMON_HERO(1700),
+    SUMMON_HERO_BY_BASIC_SCROLL(1701),
+    SUMMON_HERO_BY_PREMIUM_SCROLL(1702),
+    SUMMON_HERO_BY_FRIEND_POINT(1703),
+
+    SUMMON_HERO_WITHOUT_ACHIEVEMENT(1750),
+
+    // daily quest
+    DAILY_QUEST_COMPLETE(1800),
+    DAILY_QUEST_COMPLETE_CONSECUTIVE_ACHIEVEMENT(1801),
+    DAILY_QUEST_COMPLETE_CUMULATIVE(1802),
+    EVENT_DAILY_QUEST_COMPLETE(1804),
+
+    // event quest
+    EVENT_WEEKLY_QUEST_COMPLETE(1850),
+
+    // vip
+    VIP_LEVEL_REACH(1900),
+
+    VIDEO_CLAIM(1950),
+
+    // money
+    MONEY_EARN(2000),
+    MONEY_SPEND(2001),
+
+    // dungeon
+    DUNGEON_STAGE_PASS(2100),
+    DUNGEON_HERO_BIND(2101),
+    DUNGEON_ACTIVE_BUFF_USE(2102),
+    DUNGEON_MARKET_BUY(2103),
+    DUNGEON_SMASH_SHOP_BUY(2104),
+
+    // email
+    EMAIL_VERIFY(2200),
+
+    // formation
+    FORMATION_HERO_SELECT(2300),
+    FORMATION_HERO_SAME_FACTION_SELECT(2301),
+    FORMATION_SELECT_OTHER(2302),
+    FORMATION_ACTIVATE_COMPANION_BUFF(2303),
+
+    // mastery
+    MASTERY_UPGRADE(2400),
+
+    // raid
+    RAID_CHALLENGE(2500),
+
+    // facebook
+    FACEBOOK_JOIN(2600),
+
+    // iap
+    IAP_PACK_STATE_UPDATE(2700),
+    IAP_PACK_PURCHASE(2701),
+
+    SPECIFIC_BUNDLE_PURCHASE(2750),
+    LIMIT_BUNDLE_FREE_CLAIM(2751),
+
+    // player
+    PLAYER_DAY_CREATE(2800),
+
+    // event mid autumn quest
+    FEED_THE_BEAST(2900),
+
+    // event halloween
+    COMPLETE_DICE_GAME_LAP(2910),
+
+    //defenseMode
+    DEFENSE_CHALLENGE(3000),
+    DEFENSE_IDLE_CLAIM(3001),
+    DEFENSE_STAGE_PASS(3002),
+    ;
+
+    private static final Map<Integer, QuestType> questTypeMap = new ConcurrentHashMap<>();
+
+    private final int value;
+
+    QuestType(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    public static QuestType toQuestType(int questType) {
+        return questTypeMap.get(questType);
+    }
+
+    static {
+        QuestType[] questTypes = QuestType.values();
+        for (QuestType questType : questTypes) {
+            questTypeMap.put(questType.getValue(), questType);
+        }
+    }
+}

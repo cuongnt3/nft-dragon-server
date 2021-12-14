@@ -1,0 +1,9 @@
+/logs/
+/target/
+/out/
+.git
+src/main/resources/csv
+src/main/resources/lua
+src/main/resources/json
+/.idea/
+/classes/

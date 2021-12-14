@@ -1,0 +1,65 @@
+{
+  "load_sequences": [
+    {
+      "is_folder": true,
+      "paths": [
+        "libs",
+        "logicBattle/const",
+        "logicBattle/enum",
+        "logicBattle/utils",
+        "logicBattle/services"
+      ]
+    },
+    {
+      "is_folder": false,
+      "paths": [
+        "lua.logicBattle.stat.base.BaseHeroStat",
+        "lua.logicBattle.stat.base.BaseHeroStatIntegral",
+        "lua.logicBattle.stat.statChanger.StatChanger",
+        "lua.logicBattle.log.action.BaseActionResult",
+        "lua.logicBattle.effect.base.BaseEffect",
+        "lua.logicBattle.effect.dot.DotEffect",
+        "lua.logicBattle.log.action.effect.dot.DotEffectResult",
+        "lua.logicBattle.log.action.effect.bond.BondEffectResult",
+        "lua.logicBattle.skill.helper.damageSkill.DamageSkillHelper",
+        "lua.logicBattle.skill.helper.heal.HealSkillHelper",
+        "lua.logicBattle.data.skill.BaseSkillData",
+        "lua.logicBattle.hero.base.controller.AttackController"
+      ]
+    },
+    {
+      "is_folder": true,
+      "paths": [
+        "logicBattle/data",
+        "logicBattle/stat",
+        "logicBattle/skill/base",
+        "logicBattle/skill/helper",
+        "logicBattle/hero/base",
+        "logicBattle"
+      ]
+    }
+  ],
+  "exclude_folders": [
+    "logicBattle/_gen",
+    "logicBattle/hero/hero.*",
+    "logicBattle/skill/hero.*",
+    "logicBattle/data/skill/hero",
+    "logicBattle/data/skill/summoner"
+  ],
+  "dynamic_load": {
+    "paths": [
+      "logicBattle/hero",
+      "logicBattle/skill"
+    ],
+    "excludes": [
+      "base",
+      "helper"
+    ]
+  },
+  "exclude_files": [
+    "ServiceController"
+  ],
+  "generate_path": {
+    "lua_file": "logicBattle/_gen/_LuaRequire.lua"
+  }
+}
