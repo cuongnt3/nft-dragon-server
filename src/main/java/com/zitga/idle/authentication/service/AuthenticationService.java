@@ -11,6 +11,7 @@ import com.zitga.idle.authentication.dao.PlayerAuthenticationDAO;
 import com.zitga.idle.authentication.model.PlayerAuthentication;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.config.game.GameConfig;
+import com.zitga.idle.player.model.authorized.ErrorAuthorizedResult;
 import com.zitga.support.encryption.HashHelper;
 import com.zitga.utils.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -44,6 +45,12 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
             return LogicCode.INVALID_INBOUND_HASH;
         }
 
+        username = StringUtils.trim(username);
+        hashedPassword = StringUtils.trim(hashedPassword);
+        if (StringUtils.isNullOrEmpty(username) || StringUtils.isNullOrEmpty(hashedPassword)) {
+            return LogicCode.INVALID_INPUT_DATA;
+        }
+
         String serverHash = HashHelper.hashSHA256(username + hashedPassword + deviceId + gameConfig.getApiVersion() +
                 gameConfig.getSecretKey());
         if (!serverHash.equals(hash)) {
@@ -58,10 +65,6 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
     private PlayerAuthentication getPlayer(String userName, String password, String deviceId) {
         userName = StringUtils.trim(userName);
         password = StringUtils.trim(password);
-
-        if (StringUtils.isNullOrEmpty(userName) || StringUtils.isNullOrEmpty(password)) {
-            return null;
-        }
 
         PlayerAuthentication playerAuth = cachedAuthService.getFromCacheByUserName(userName, password);
         if (playerAuth == null) {
@@ -92,7 +95,7 @@ public class AuthenticationService implements IHttpAuthenticationHandler {
 
         int validateHashResult = validateHash(senderAddress, route, userName, password, deviceId, hash);
         if (validateHashResult != LogicCode.SUCCESS) {
-            return null;
+            return new ErrorAuthorizedResult(validateHashResult);
         }
 
         return getPlayer(userName, password, deviceId);

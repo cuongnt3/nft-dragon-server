@@ -17,6 +17,7 @@ import com.zitga.idle.authentication.service.AuthenticationService;
 import com.zitga.idle.authentication.service.LoginService;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.base.handler.BaseHttpHandler;
+import com.zitga.idle.player.model.authorized.ErrorAuthorizedResult;
 
 @HttpController(AuthRoute.HTTP_AUTH_ROUTE)
 @BeanComponent
@@ -32,6 +33,8 @@ public class LoginHttpHandler extends BaseHttpHandler {
         try {
             if (authorizedEntity == null) {
                 return HttpResponse.error(HttpCode.FORBIDDEN, LogicCode.PLAYER_NOT_FOUND);
+            }else if (authorizedEntity instanceof ErrorAuthorizedResult){
+                return HttpResponse.error(HttpCode.FORBIDDEN, ((ErrorAuthorizedResult) authorizedEntity).getResultCode());
             }
 
             PlayerAuthentication playerAuthentication = (PlayerAuthentication) authorizedEntity;
