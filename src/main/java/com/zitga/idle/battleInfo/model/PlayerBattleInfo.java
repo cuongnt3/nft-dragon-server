@@ -6,6 +6,7 @@ import com.zitga.idle.base.constant.CollectionName;
 import com.zitga.idle.base.model.BasePlayerComponent;
 import com.zitga.idle.battleInfo.constant.BattleInfoTag;
 import com.zitga.idle.battleInfo.model.formation.TeamFormation;
+import com.zitga.idle.enumeration.common.GameMode;
 import com.zitga.idle.player.model.Player;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -39,5 +40,10 @@ public class PlayerBattleInfo extends BasePlayerComponent {
 
     public void initWithDefaultValues() {
         formations = new ConcurrentHashMap<>();
+    }
+
+    // ---------------------------------------- Setters ----------------------------------------
+    public void addFormation(GameMode gameMode, TeamFormation teamFormation) {
+        formations.put(gameMode.getValue(), teamFormation);
     }
 }

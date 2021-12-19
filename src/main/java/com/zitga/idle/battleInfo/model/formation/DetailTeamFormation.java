@@ -3,6 +3,7 @@ package com.zitga.idle.battleInfo.model.formation;
 import com.zitga.idle.battleInfo.constant.BattleInfoTag;
 import com.zitga.idle.dragon.model.InventoryDragon;
 import com.zitga.idle.dragon.model.PlayerDragonCollection;
+import com.zitga.idle.pve.constant.PveConstant;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Property;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DetailTeamFormation {
 
     @Property(BattleInfoTag.FORMATION_TAG)
-    private int formation = 1;
+    private int formation = PveConstant.FORMATION_DEFAULT;
 
     @Embedded(BattleInfoTag.FRONT_LINE_TAG)
     // Key: position, start from 1
@@ -30,7 +31,6 @@ public class DetailTeamFormation {
 
     public DetailTeamFormation(TeamFormation teamFormation, PlayerDragonCollection heroCollection) {
         if (teamFormation != null && heroCollection != null) {
-            formation = teamFormation.getFormation();
 
             Map<Integer, Long> frontLine = teamFormation.getFrontLine();
             for (Map.Entry<Integer, Long> entry : frontLine.entrySet()) {

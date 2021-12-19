@@ -41,29 +41,25 @@ public class DragonSummonHandler {
     @HttpFilter(LoginHttpHandler.class)
     @HttpAuthorizeHandler(value = PlayerAuthorizedService.class, isCreateNewUser = false)
     public HttpResponse handle(@HttpAuthorizedEntity IAuthorizedEntity authorizedEntity) {
-        if (gameConfig.getAllowFakeData()) {
-            if (authorizedEntity instanceof Player) {
-                try {
-                    Player player = (Player) authorizedEntity;
-                    String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
-                    long eggInventoryId = Long.parseLong(data);
-                    SummonResult result = summonService.summonDragon(player, eggInventoryId);
-                    if (result.getResultCode() == LogicCode.SUCCESS) {
-                        String content = jsonService.writeValueAsString(result);
-                        return HttpResponseUtils.success(content);
-                    } else {
-                        return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, result.getResultCode());
-                    }
-
-                } catch (Exception e) {
-                    return HttpResponse.error(HttpResponseCode.BAD_REQUEST, LogicCode.INVALID_INPUT_DATA);
+        if (authorizedEntity instanceof Player) {
+            try {
+                Player player = (Player) authorizedEntity;
+                String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
+                long eggInventoryId = Long.parseLong(data);
+                SummonResult result = summonService.summonDragon(player, eggInventoryId);
+                if (result.getResultCode() == LogicCode.SUCCESS) {
+                    String content = jsonService.writeValueAsString(result);
+                    return HttpResponseUtils.success(content);
+                } else {
+                    return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, result.getResultCode());
                 }
-            } else {
-                ErrorAuthorizedResult error = (ErrorAuthorizedResult) authorizedEntity;
-                return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, error.getResultCode());
+
+            } catch (Exception e) {
+                return HttpResponse.error(HttpResponseCode.BAD_REQUEST, LogicCode.INVALID_INPUT_DATA);
             }
         } else {
-            return HttpResponse.error(HttpResponseCode.FORBIDDEN, LogicCode.FAKE_FORBIDDEN);
+            ErrorAuthorizedResult error = (ErrorAuthorizedResult) authorizedEntity;
+            return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, error.getResultCode());
         }
     }
 }

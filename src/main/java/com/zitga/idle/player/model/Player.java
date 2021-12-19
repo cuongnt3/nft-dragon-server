@@ -8,6 +8,7 @@ import com.zitga.idle.authentication.model.PlayerAuthentication;
 import com.zitga.idle.base.service.LazyLoadService;
 import com.zitga.idle.battleInfo.model.PlayerBattleInfo;
 import com.zitga.idle.dragon.model.PlayerDragonCollection;
+import com.zitga.idle.pve.model.PlayerPve;
 import com.zitga.idle.statistics.model.PlayerStatistics;
 import com.zitga.idle.summon.model.PlayerDragonSummon;
 
@@ -25,6 +26,7 @@ public class Player implements IAuthorizedEntity {
 
     private PlayerDragonSummon dragonSummon;
     private PlayerDragonCollection dragonCollection;
+    private PlayerPve playerPve;
 
     private PlayerStatistics statistics;
 
@@ -68,6 +70,10 @@ public class Player implements IAuthorizedEntity {
         return dragonCollection;
     }
 
+    public PlayerPve getOrLoadPlayerPve() {
+        return playerPve;
+    }
+
     public PlayerStatistics getStatistics() {
         return statistics;
     }
@@ -98,6 +104,12 @@ public class Player implements IAuthorizedEntity {
     public void setDragonCollection(PlayerDragonCollection dragonCollection) {
         if (this.dragonCollection == null) {
             this.dragonCollection = dragonCollection;
+        }
+    }
+
+    public void setPlayerPve(PlayerPve playerPve) {
+        if (this.playerPve == null) {
+            this.playerPve = playerPve;
         }
     }
 

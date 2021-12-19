@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public enum PlayerDataType {
     DRAGON_COLLECTION(0),
     SUMMON(1),
+    PVE(2),
     ;
 
     private static final Map<Integer, PlayerDataType> playerDataTypeMap = new ConcurrentHashMap<>();

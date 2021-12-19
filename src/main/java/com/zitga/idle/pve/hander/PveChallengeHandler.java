@@ -1,7 +1,6 @@
-package com.zitga.idle.summon.handler;
+package com.zitga.idle.pve.hander;
 
 import com.zitga.bean.annotation.BeanComponent;
-import com.zitga.bean.annotation.BeanField;
 import com.zitga.core.annotation.http.HttpAuthorizeHandler;
 import com.zitga.core.annotation.http.HttpController;
 import com.zitga.core.annotation.http.HttpFilter;
@@ -14,29 +13,17 @@ import com.zitga.idle.authentication.handler.LoginHttpHandler;
 import com.zitga.idle.base.constant.HttpResponseCode;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.base.utils.HttpResponseUtils;
-import com.zitga.idle.config.game.GameConfig;
 import com.zitga.idle.player.constant.PlayerConstant;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.player.model.authorized.ErrorAuthorizedResult;
 import com.zitga.idle.player.service.PlayerAuthorizedService;
-import com.zitga.idle.summon.constant.SummonRoute;
-import com.zitga.idle.summon.service.SummonService;
-import com.zitga.support.JsonService;
+import com.zitga.idle.pve.constant.PveRoute;
 
-@HttpController(SummonRoute.HTTP_DRAGON_ROUTE)
+@HttpController(PveRoute.HTTP_PVE_ROUTE)
 @BeanComponent
-public class DragonHatchHandler {
+public class PveChallengeHandler {
 
-    @BeanField
-    private GameConfig gameConfig;
-
-    @BeanField
-    private SummonService summonService;
-
-    @BeanField
-    private JsonService jsonService;
-
-    @HttpRoute(value = SummonRoute.HTTP_DRAGON_HATCH_ROUTE, method = HttpMethod.POST)
+    @HttpRoute(value = PveRoute.HTTP_CHALLENGE_ROUTE, method = HttpMethod.POST)
     @HttpFilter(LoginHttpHandler.class)
     @HttpAuthorizeHandler(value = PlayerAuthorizedService.class, isCreateNewUser = false)
     public HttpResponse handle(@HttpAuthorizedEntity IAuthorizedEntity authorizedEntity) {
@@ -44,14 +31,14 @@ public class DragonHatchHandler {
 
             try {
                 Player player = (Player) authorizedEntity;
-                String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
-                long eggInventoryId = Long.parseLong(data);
-                int resultCode = summonService.incubateEgg(player, eggInventoryId);
-                if (resultCode == LogicCode.SUCCESS) {
-                    return HttpResponseUtils.success("");
-                } else {
-                    return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, resultCode);
-                }
+//                String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
+//                int resultCode = summonService.incubateEgg(player, eggInventoryId);
+//                if (resultCode == LogicCode.SUCCESS) {
+//                    return HttpResponseUtils.success("");
+//                } else {
+//                    return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, resultCode);
+//                }
+                return HttpResponse.ok();
 
             } catch (Exception e) {
                 return HttpResponse.error(HttpResponseCode.BAD_REQUEST, LogicCode.INVALID_INPUT_DATA);
