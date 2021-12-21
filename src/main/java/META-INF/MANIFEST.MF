@@ -1,17 +1,17 @@
 Manifest-Version: 1.0
 Main-Class: com.zitga.idle.Main
-Class-Path: opentest4j-1.2.0.jar geoip2-2.15.0.jar jackson-annotations-2
- .12.3.jar log4j-core-2.13.3.jar bson-3.12.8.jar netty-all-4.1.63.Final.
- jar slf4j-api-1.7.25.jar bcel-6.5.0.jar junit-platform-commons-1.7.1.ja
- r apiguardian-api-1.1.0.jar log4j-mongodb2-2.13.3.jar mongodb-driver-as
- ync-3.12.8.jar log4j-slf4j-impl-2.13.3.jar commons-logging-1.2.jar java
- ssist-3.27.0-GA.jar junit-jupiter-api-5.7.1.jar jackson-dataformat-prop
- erties-2.12.3.jar mongo-java-driver-3.12.8.jar maxmind-db-2.0.0.jar sna
- ppy-java-1.1.8.4.jar jackson-core-2.12.3.jar commons-codec-1.15.jar ref
- lections-0.9.12.jar commons-io-2.8.0.jar mongodb-driver-core-3.12.8.jar
-  httpcore-4.4.13.jar httpclient-4.5.13.jar zitga-dao.jar zitga-core.jar
-  zitga-email.jar proxytoys-1.0.jar zitga-payment.jar luaj-jse-3.0.2.jar
-  cglib-nodep-2.2.2.jar zitga-morphia-revised.jar zitga-gift-code-server
- -lib.jar jackson-databind-2.12.3.jar exp4j-0.4.8.jar log4j-api-2.13.3.j
+Class-Path: httpcore-4.4.13.jar jackson-core-2.12.3.jar log4j-slf4j-impl
+ -2.15.0.jar httpclient-4.5.13.jar javassist-3.27.0-GA.jar log4j-mongodb
+ 2-2.13.3.jar mongodb-driver-core-3.12.8.jar snappy-java-1.1.8.4.jar jac
+ kson-databind-2.12.3.jar jackson-dataformat-properties-2.12.3.jar commo
+ ns-io-2.8.0.jar opentest4j-1.2.0.jar mongo-java-driver-3.12.8.jar exp4j
+ -0.4.8.jar bson-3.12.8.jar slf4j-api-1.7.25.jar junit-platform-commons-
+ 1.7.1.jar jackson-annotations-2.12.3.jar log4j-api-2.15.0.jar junit-jup
+ iter-api-5.7.1.jar zitga-dao.jar zitga-core.jar zitga-email.jar proxyto
+ ys-1.0.jar zitga-payment.jar luaj-jse-3.0.2.jar cglib-nodep-2.2.2.jar z
+ itga-morphia-revised.jar zitga-gift-code-server-lib.jar geoip2-2.15.0.j
+ ar log4j-core-2.15.0.jar netty-all-4.1.63.Final.jar commons-codec-1.15.
+ jar apiguardian-api-1.1.0.jar maxmind-db-2.0.0.jar reflections-0.9.12.j
+ ar commons-logging-1.2.jar mongodb-driver-async-3.12.8.jar bcel-6.5.0.j
  ar
 
