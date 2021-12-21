@@ -1,33 +1,33 @@
 package com.zitga.idle.battle.model.message;
 
-import com.zitga.core.message.socket.IDeserializable;
-import com.zitga.core.message.socket.ISerializable;
-import io.netty.buffer.ByteBuf;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BattleHeroInbound implements ISerializable, IDeserializable {
+public class BattleHeroInbound {
 
+    @JsonProperty("id")
     private long heroInventoryId;
-    private boolean isFrontLine;
+
+    @JsonProperty("position")
     private int position;
 
+    @JsonProperty("is_front_line")
+    private boolean isFrontLine;
+
     // ---------------------------------------- Getters ----------------------------------------
+    @JsonIgnore
     public long getHeroInventoryId() {
         return heroInventoryId;
     }
 
+    @JsonIgnore
     public boolean isFrontLine() {
         return isFrontLine;
     }
 
+    @JsonIgnore
     public int getPosition() {
         return position;
-    }
-
-    @Override
-    public void serialize(ByteBuf out) {
-        out.writeLongLE(heroInventoryId);
-        out.writeBoolean(isFrontLine);
-        out.writeByte(position);
     }
 
     // ---------------------------------------- Setters ----------------------------------------
@@ -41,12 +41,5 @@ public class BattleHeroInbound implements ISerializable, IDeserializable {
 
     public void setPosition(int position) {
         this.position = position;
-    }
-
-    @Override
-    public void deserialize(ByteBuf in) {
-        heroInventoryId = in.readLongLE();
-        isFrontLine = in.readBoolean();
-        position = in.readUnsignedByte();
     }
 }

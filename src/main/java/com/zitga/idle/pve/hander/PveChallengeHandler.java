@@ -1,6 +1,7 @@
 package com.zitga.idle.pve.hander;
 
 import com.zitga.bean.annotation.BeanComponent;
+import com.zitga.bean.annotation.BeanField;
 import com.zitga.core.annotation.http.HttpAuthorizeHandler;
 import com.zitga.core.annotation.http.HttpController;
 import com.zitga.core.annotation.http.HttpFilter;
@@ -13,15 +14,25 @@ import com.zitga.idle.authentication.handler.LoginHttpHandler;
 import com.zitga.idle.base.constant.HttpResponseCode;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.base.utils.HttpResponseUtils;
+import com.zitga.idle.battle.model.message.BattleTeamInbound;
 import com.zitga.idle.player.constant.PlayerConstant;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.player.model.authorized.ErrorAuthorizedResult;
 import com.zitga.idle.player.service.PlayerAuthorizedService;
 import com.zitga.idle.pve.constant.PveRoute;
+import com.zitga.idle.pve.model.message.ChallengeResult;
+import com.zitga.idle.pve.service.PveChallengeService;
+import com.zitga.support.JsonService;
 
 @HttpController(PveRoute.HTTP_PVE_ROUTE)
 @BeanComponent
 public class PveChallengeHandler {
+
+    @BeanField
+    private PveChallengeService challengeService;
+
+    @BeanField
+    private JsonService jsonService;
 
     @HttpRoute(value = PveRoute.HTTP_CHALLENGE_ROUTE, method = HttpMethod.POST)
     @HttpFilter(LoginHttpHandler.class)
@@ -31,14 +42,15 @@ public class PveChallengeHandler {
 
             try {
                 Player player = (Player) authorizedEntity;
-//                String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
-//                int resultCode = summonService.incubateEgg(player, eggInventoryId);
-//                if (resultCode == LogicCode.SUCCESS) {
-//                    return HttpResponseUtils.success("");
-//                } else {
-//                    return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, resultCode);
-//                }
-                return HttpResponse.ok();
+                String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
+                BattleTeamInbound inbound = jsonService.readValue(data, BattleTeamInbound.class);
+
+                ChallengeResult result = challengeService.challenge(player, inbound);
+                if (result.getResultCode() == LogicCode.SUCCESS) {
+                    return HttpResponseUtils.success(jsonService.writeValueAsString(result));
+                } else {
+                    return HttpResponse.error(HttpResponseCode.UNAUTHORIZED, result.getResultCode());
+                }
 
             } catch (Exception e) {
                 return HttpResponse.error(HttpResponseCode.BAD_REQUEST, LogicCode.INVALID_INPUT_DATA);

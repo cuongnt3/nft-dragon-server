@@ -5,7 +5,6 @@ import com.zitga.bean.annotation.BeanField;
 import com.zitga.idle.battle.model.message.BattleHeroInbound;
 import com.zitga.idle.battle.model.message.BattleTeamInbound;
 import com.zitga.idle.battleInfo.model.PlayerBattleInfo;
-import com.zitga.idle.battleInfo.model.formation.DetailTeamFormation;
 import com.zitga.idle.battleInfo.model.formation.TeamFormation;
 import com.zitga.idle.battleInfo.service.BattleInfoService;
 import com.zitga.idle.dragon.model.InventoryDragon;
@@ -16,8 +15,6 @@ import com.zitga.idle.hero.service.HeroDataService;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.publisher.service.PublisherService;
 import com.zitga.idle.pve.constant.PveConstant;
-import com.zitga.idle.pve.model.message.HeroBattleInbound;
-import com.zitga.idle.pve.model.message.PveChallengeInbound;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +33,7 @@ public class FormationService {
     private PublisherService publisherService;
 
     // --------------------------------------------------------------------------------
-    public boolean saveFormation(Player player, GameMode gameMode, PveChallengeInbound inbound){
+    public boolean saveFormation(Player player, GameMode gameMode, BattleTeamInbound inbound){
         PlayerBattleInfo battleInfo = player.getBattleInfo();
 
         TeamFormation teamFormation = getTeamFormation(player, inbound);
@@ -50,19 +47,19 @@ public class FormationService {
         return true;
     }
 
-    public TeamFormation getTeamFormation(Player player, PveChallengeInbound inbound) {
+    public TeamFormation getTeamFormation(Player player, BattleTeamInbound inbound) {
         PlayerDragonCollection heroCollection = player.getOrLoadDragon();
 
         Set<Long> heroInventoryIds = new HashSet<>();
-        List<HeroBattleInbound> heroInbounds = inbound.getHeroList();
-        for (HeroBattleInbound heroInbound : heroInbounds) {
-            InventoryDragon hero = heroCollection.getDragon(heroInbound.getInventoryHeroId());
+        List<BattleHeroInbound> heroInbounds = inbound.getBattleHeroes();
+        for (BattleHeroInbound heroInbound : heroInbounds) {
+            InventoryDragon hero = heroCollection.getDragon(heroInbound.getHeroInventoryId());
             if (hero == null) {
                 // hero is not found
                 return null;
             }
 
-            heroInventoryIds.add(heroInbound.getInventoryHeroId());
+            heroInventoryIds.add(heroInbound.getHeroInventoryId());
         }
 
         if (heroInventoryIds.size() != heroInbounds.size()) {
@@ -76,7 +73,7 @@ public class FormationService {
             return null;
         }
 
-        for (HeroBattleInbound heroInbound : heroInbounds) {
+        for (BattleHeroInbound heroInbound : heroInbounds) {
             if (heroInbound.isFrontLine()) {
                 if (heroInbound.getPosition() <= 0 || heroInbound.getPosition() > formationData.getFrontLine()) {
                     // invalid front line position
@@ -103,11 +100,11 @@ public class FormationService {
         return teamFormation;
     }
 
-    public TeamFormation convertToTeamFormation(PveChallengeInbound inbound) {
+    public TeamFormation convertToTeamFormation(BattleTeamInbound inbound) {
         TeamFormation teamFormation = new TeamFormation();
 
-        List<HeroBattleInbound> heroInbounds = inbound.getHeroList();
-        for (HeroBattleInbound heroInbound : heroInbounds) {
+        List<BattleHeroInbound> heroInbounds = inbound.getBattleHeroes();
+        for (BattleHeroInbound heroInbound : heroInbounds) {
             teamFormation.addHero(heroInbound);
         }
 

@@ -21,11 +21,11 @@ public class LuaItemDataService extends LuaObject {
 
     public void load(LuaHeroDataService luaHeroDataService) {
         this.loadEquipmentData(luaHeroDataService);
-        this.loadArtifactData(luaHeroDataService);
-        this.loadStoneData(luaHeroDataService);
-        this.loadSkinData(luaHeroDataService);
-        this.loadIdleEffectData(luaHeroDataService);
-        this.loadTalentData(luaHeroDataService);
+//        this.loadArtifactData(luaHeroDataService);
+//        this.loadStoneData(luaHeroDataService);
+//        this.loadSkinData(luaHeroDataService);
+//        this.loadIdleEffectData(luaHeroDataService);
+//        this.loadTalentData(luaHeroDataService);
         this.loadSetEquipmentData(luaHeroDataService);
     }
 

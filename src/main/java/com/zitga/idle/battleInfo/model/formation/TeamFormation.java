@@ -1,7 +1,7 @@
 package com.zitga.idle.battleInfo.model.formation;
 
+import com.zitga.idle.battle.model.message.BattleHeroInbound;
 import com.zitga.idle.battleInfo.constant.BattleInfoTag;
-import com.zitga.idle.pve.model.message.HeroBattleInbound;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 
@@ -63,11 +63,11 @@ public class TeamFormation {
     }
 
     // ---------------------------------------- Setters ----------------------------------------
-    public void addHero(HeroBattleInbound heroInbound) {
+    public void addHero(BattleHeroInbound heroInbound) {
         if (heroInbound.isFrontLine()) {
-            frontLine.put(heroInbound.getPosition(), heroInbound.getInventoryHeroId());
+            frontLine.put(heroInbound.getPosition(), heroInbound.getHeroInventoryId());
         } else {
-            backLine.put(heroInbound.getPosition(), heroInbound.getInventoryHeroId());
+            backLine.put(heroInbound.getPosition(), heroInbound.getHeroInventoryId());
         }
     }
 }

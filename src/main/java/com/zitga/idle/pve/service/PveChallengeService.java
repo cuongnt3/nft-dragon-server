@@ -5,16 +5,15 @@ import com.zitga.bean.annotation.BeanField;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.battle.model.battle.LuaBattle;
 import com.zitga.idle.battle.model.data.PredefineTeamData;
+import com.zitga.idle.battle.model.message.BattleResultInfo;
+import com.zitga.idle.battle.model.message.BattleTeamInbound;
 import com.zitga.idle.battle.service.BattleService;
+import com.zitga.idle.battle.utils.BattleLogUtils;
 import com.zitga.idle.battleInfo.service.formation.FormationService;
 import com.zitga.idle.enumeration.common.GameMode;
-import com.zitga.idle.enumeration.resource.ResourceSource;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.pve.model.message.ChallengeResult;
-import com.zitga.idle.pve.model.message.PveChallengeInbound;
-import com.zitga.idle.resource.model.Reward;
-
-import java.util.List;
+import com.zitga.support.JsonService;
 
 @BeanComponent
 public class PveChallengeService {
@@ -25,7 +24,13 @@ public class PveChallengeService {
     @BeanField
     private BattleService battleService;
 
-    public ChallengeResult challenge(Player player, PveChallengeInbound inbound) {
+    @BeanField
+    private PveDataService pveDataService;
+
+    @BeanField
+    private JsonService jsonService;
+
+    public ChallengeResult challenge(Player player, BattleTeamInbound inbound) {
         ChallengeResult result = new ChallengeResult();
 
         // TODO
@@ -35,11 +40,14 @@ public class PveChallengeService {
             return result.withCode(LogicCode.FORMATION_INVALID);
         }
 
-//        PredefineTeamData predefineTeamData = campaignDataService.getDefenderData(stageChallenge, dataId);
-//
-//        LuaBattle luaBattle = battleService.createBattle(GameMode.PVE, player, inbound, predefineTeamData);
+        PredefineTeamData predefineTeamData = pveDataService.getDefenderData(101001);
 
-//        battleService.calculateBattleResult(luaBattle, result);
+        LuaBattle luaBattle = battleService.createBattle(GameMode.PVE, player, inbound, predefineTeamData);
+
+        BattleResultInfo resultInfo = new BattleResultInfo();
+        battleService.calculateBattleResult(luaBattle, resultInfo);
+
+        result.setResultLog(BattleLogUtils.createBattleLog(resultInfo.getLuaBattleResult()));
 
         return result;
     }
