@@ -69,8 +69,12 @@ public class PredefineTeamData implements ISerializable, IDeserializable {
 
         bossSlotId = Integer.parseInt(data.getOrDefault(BattleTag.BOSS_SLOT_TAG, "-1"));
 
-        for (int i = 0; i < BattleConstant.NUMBER_SLOT; i++) {
-            heroList.add(Integer.parseInt(data.get(BattleTag.HERO_SLOT_TAG + (i + 1))));
+        for (int i = 0; i < BattleConstant.MAX_NUMBER_SLOT; i++) {
+            if (data.containsKey(BattleTag.HERO_TAG + (i + 1))) {
+                heroList.add(Integer.parseInt(data.get(BattleTag.HERO_TAG + (i + 1))));
+            } else {
+                heroList.add(-1);
+            }
         }
 
         ServiceController.instance().getLuaServiceManager().getPredefineTeamDataService().validate(this);

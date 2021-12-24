@@ -14,7 +14,7 @@ public class BattleTag {
     public static final String ID_TEAM_ITEM_TAG = "id_team_item";
     public static final String ID_TEAM_MASTERY_TAG = "id_team_mastery";
 
-    public static final String HERO_SLOT_TAG = "hero_";
+    public static final String HERO_TAG = "hero_";
 
     public static final String HERO_FORBIDDEN_ID_TAG = "forbidden_hero_id";
     public static final String HERO_WARNING_ID_TAG = "warning_hero_id";
@@ -24,4 +24,6 @@ public class BattleTag {
 
     public static final String IS_FRONT_TAG = "is_front";
     public static final String POSITION_TAG = "position";
+
+    public static final String HERO_SLOT_TAG = "hero_slot_";
 }

@@ -14,27 +14,26 @@ import com.zitga.idle.authentication.handler.LoginHttpHandler;
 import com.zitga.idle.base.constant.HttpResponseCode;
 import com.zitga.idle.base.constant.LogicCode;
 import com.zitga.idle.base.utils.HttpResponseUtils;
-import com.zitga.idle.battle.model.message.BattleTeamInbound;
 import com.zitga.idle.player.constant.PlayerConstant;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.player.model.authorized.ErrorAuthorizedResult;
 import com.zitga.idle.player.service.PlayerAuthorizedService;
 import com.zitga.idle.pve.constant.PveRoute;
-import com.zitga.idle.pve.model.message.ChallengeResult;
-import com.zitga.idle.pve.service.PveChallengeService;
+import com.zitga.idle.pve.model.message.DefenderTeamGetResult;
+import com.zitga.idle.pve.service.PveService;
 import com.zitga.support.JsonService;
 
 @HttpController(PveRoute.HTTP_PVE_ROUTE)
 @BeanComponent
-public class PveChallengeHandler {
+public class PveDefenderGetHandler {
 
     @BeanField
-    private PveChallengeService challengeService;
+    private PveService pveService;
 
     @BeanField
     private JsonService jsonService;
 
-    @HttpRoute(value = PveRoute.HTTP_CHALLENGE_ROUTE, method = HttpMethod.POST)
+    @HttpRoute(value = PveRoute.GET_FORMATION_ROUTE, method = HttpMethod.GET)
     @HttpFilter(LoginHttpHandler.class)
     @HttpAuthorizeHandler(value = PlayerAuthorizedService.class, isCreateNewUser = false)
     public HttpResponse handle(@HttpAuthorizedEntity IAuthorizedEntity authorizedEntity) {
@@ -42,9 +41,9 @@ public class PveChallengeHandler {
             try {
                 Player player = (Player) authorizedEntity;
                 String data = player.getAuthToken(PlayerConstant.PLAYER_DATA);
-                BattleTeamInbound inbound = jsonService.readValue(data, BattleTeamInbound.class);
+                int stage = Integer.parseInt(data);
 
-                ChallengeResult result = challengeService.challenge(player, inbound);
+                DefenderTeamGetResult result = pveService.getDefenderFormation(player, stage);
                 if (result.getResultCode() == LogicCode.SUCCESS) {
                     return HttpResponseUtils.success(jsonService.writeValueAsString(result));
                 } else {

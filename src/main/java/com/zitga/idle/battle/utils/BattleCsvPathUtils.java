@@ -58,4 +58,12 @@ public class BattleCsvPathUtils {
     public static String getBossHeroCheckPath() {
         return String.format("%s/boss_hero_check.csv", PREDEFINE_TEAM_PATH);
     }
+
+    public static String getTeamLevelConfigPath() {
+        return String.format("%s/team_level.csv", PREDEFINE_TEAM_PATH);
+    }
+
+    public static String getTeamStarConfigPath() {
+        return String.format("%s/team_star.csv", PREDEFINE_TEAM_PATH);
+    }
 }

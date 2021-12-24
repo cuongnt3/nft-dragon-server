@@ -6,4 +6,6 @@ public class BattleConstant {
 
     public static final int NUMBER_SLOT = 5;
     public static final int NOT_EXISTED_ID = -1;
+
+    public static final int MAX_NUMBER_SLOT = 6;
 }
