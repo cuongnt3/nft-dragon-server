@@ -4,6 +4,7 @@ import com.zitga.idle.lua.model.LuaObject;
 import org.luaj.vm2.LuaValue;
 
 public class LuaBaseHero extends LuaObject {
+
     public LuaBaseHero(LuaValue luaBinding) {
         super(luaBinding);
     }

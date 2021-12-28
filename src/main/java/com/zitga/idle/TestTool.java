@@ -90,6 +90,7 @@ public class TestTool {
                 JsonService jsonService = beanContainer.getComponent(JsonService.class);
                 try {
                     logger.info("[BATTLE LOG]: {}", jsonService.writeValueAsString(BattleLogUtils.createBattleLog(result)));
+//                    logger.info("[BATTLE LOG]: {}", result.toShortString(LuaRunMode.TEST));
 
                 } catch (Exception e) {
                     logger.info("[BATTLE LOG]: FAIL");

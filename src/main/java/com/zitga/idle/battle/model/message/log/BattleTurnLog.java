@@ -9,6 +9,7 @@ import com.zitga.idle.battle.model.battle.output.log.action.skill.LuaActiveSkill
 import com.zitga.idle.battle.model.message.log.action.BaseActionResult;
 import com.zitga.idle.battle.model.message.log.action.attack.AttackResult;
 import com.zitga.idle.battle.model.message.log.action.skill.UseActiveSkillResult;
+import com.zitga.idle.battle.model.message.log.effect.BattleTeamEffectLog;
 import com.zitga.idle.enumeration.battle.ActionResultType;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class BattleTurnLog {
 
     private BattleTeamLog attacker;
     private BattleTeamLog defender;
+
+    private BattleTeamEffectLog attackerEffect;
+    private BattleTeamEffectLog defenderEffect;
 
     // ---------------------------------------- Getters ----------------------------------------
     public int getRound() {
@@ -55,6 +59,14 @@ public class BattleTurnLog {
 //    public BattleTeamLog getDefender() {
 //        return defender;
 //    }
+
+    public BattleTeamEffectLog getAttackerEffect() {
+        return attackerEffect;
+    }
+
+    public BattleTeamEffectLog getDefenderEffect() {
+        return defenderEffect;
+    }
 
     // ---------------------------------------- Setters ----------------------------------------
     public void setTurnInfo(int round, int turn) {
@@ -98,15 +110,20 @@ public class BattleTurnLog {
         BattleTeamLog battleTeamLog = new BattleTeamLog();
         battleTeamLog.setTeamId(luaBattleTeamLog.getTeamId());
 
+        BattleTeamEffectLog battleTeamEffectLog = new BattleTeamEffectLog();
+
         List<LuaHeroStatusLog> heroStatusLogs = luaBattleTeamLog.getHeroStatusList();
         for (LuaHeroStatusLog heroStatusLog : heroStatusLogs) {
             battleTeamLog.addBaseHeroLog(heroStatusLog);
+            battleTeamEffectLog.addBaseHeroEffectLog(heroStatusLog);
         }
 
         if (isAttacker) {
             attacker = battleTeamLog;
+            attackerEffect = battleTeamEffectLog;
         } else {
             defender = battleTeamLog;
+            defenderEffect = battleTeamEffectLog;
         }
     }
 }

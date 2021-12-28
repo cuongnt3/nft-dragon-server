@@ -18,7 +18,7 @@ public class LuaBattleTeamLog extends LuaObject {
 
     public List<LuaHeroStatusLog> getHeroStatusList() {
         List<LuaHeroStatusLog> result = new ArrayList<>();
-        LuaList heroStatusList = new LuaList(getField("beforeLogs"));
+        LuaList heroStatusList = new LuaList(getField("afterLogs"));
         for (int i = 1; i <= heroStatusList.count(); i++) {
             LuaHeroStatusLog statusLog = new LuaHeroStatusLog(heroStatusList.get(i));
             result.add(statusLog);

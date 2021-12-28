@@ -60,7 +60,7 @@ public class PveService implements IAsyncPlayerDataManageable {
             return result.withCode(LogicCode.INVALID_INPUT_DATA);
         }
 
-        TeamStarConfig starConfig = battleDataService.getTeamStarConfig(predefineTeamData.getTeamLevelId());
+        TeamStarConfig starConfig = battleDataService.getTeamStarConfig(predefineTeamData.getTeamStarId());
         if (starConfig == null) {
             return result.withCode(LogicCode.INVALID_INPUT_DATA);
         }

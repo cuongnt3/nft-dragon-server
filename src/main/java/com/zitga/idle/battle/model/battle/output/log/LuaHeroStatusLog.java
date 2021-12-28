@@ -1,5 +1,6 @@
 package com.zitga.idle.battle.model.battle.output.log;
 
+import com.zitga.idle.lua.model.LuaList;
 import com.zitga.idle.lua.model.LuaObject;
 import org.luaj.vm2.LuaValue;
 
@@ -20,4 +21,7 @@ public class LuaHeroStatusLog extends LuaObject {
         return getField("powerPercent").tofloat();
     }
 
+    public LuaList getEffectLog() {
+        return new LuaList(invoke("GetEffectLog"));
+    }
 }
