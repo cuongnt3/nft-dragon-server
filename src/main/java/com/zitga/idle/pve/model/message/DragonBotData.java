@@ -1,36 +1,23 @@
 package com.zitga.idle.pve.model.message;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DragonBotData {
 
+    @JsonProperty("0")
     private int dragonId;
 
+    @JsonProperty("1")
     private int level;
 
+    @JsonProperty("2")
     private int star;
 
+    @JsonProperty("3")
     private int position;
 
+    @JsonProperty("4")
     private boolean isFrontLine;
-
-    public int getDragonId() {
-        return dragonId;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getStar() {
-        return star;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public boolean isFrontLine() {
-        return isFrontLine;
-    }
 
     public void setDragonId(int dragonId) {
         this.dragonId = dragonId;

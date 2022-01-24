@@ -101,7 +101,7 @@ public class SummonGroup {
         eggSummonRates.put(summonEgg.getId(), summonEgg);
     }
 
-    public void addDragonSummonRate(EggType eggType, SummonDragon summonDragon) {
-        dragonSummonRates.put(eggType.getValue(), summonDragon);
+    public void addDragonSummonRate(SummonDragon summonDragon) {
+        dragonSummonRates.put(summonDragon.getId(), summonDragon);
     }
 }

@@ -4,12 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zitga.idle.battle.model.message.log.BattleResultLog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChallengeResult {
 
     private int resultCode;
 
-    @JsonProperty("resultLog")
+    @JsonProperty("0")
     private BattleResultLog resultLog;
+
+    @JsonProperty("1")
+    private List<DragonBotData> dragonBotDataList = new ArrayList<>();
 
     // ---------------------------------------- Getters ----------------------------------------
     @JsonIgnore
@@ -25,5 +31,9 @@ public class ChallengeResult {
 
     public void setResultLog(BattleResultLog resultLog) {
         this.resultLog = resultLog;
+    }
+
+    public void setDragonBotDataList(List<DragonBotData> dragonBotDataList) {
+        this.dragonBotDataList = dragonBotDataList;
     }
 }

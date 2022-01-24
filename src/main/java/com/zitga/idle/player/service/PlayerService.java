@@ -12,6 +12,7 @@ import com.zitga.idle.dragon.service.DragonService;
 import com.zitga.idle.executor.service.ExecutorService;
 import com.zitga.idle.player.model.IAsyncPlayerDataManageable;
 import com.zitga.idle.player.model.Player;
+import com.zitga.idle.statistics.service.StatisticsService;
 import com.zitga.idle.summon.service.SummonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,9 @@ public class PlayerService {
     private DragonService dragonService;
 
     @BeanField
+    private StatisticsService statisticsService;
+
+    @BeanField
     private ExecutorService executorService;
 
     @BeanField
@@ -52,6 +56,7 @@ public class PlayerService {
         // manually add async data manager to control order of load
         playerAsyncDataManager = new ArrayList<>();
         playerAsyncDataManager.add(dragonService);
+        playerAsyncDataManager.add(statisticsService);
     }
 
     // ---------------------------------------- Create & Load ----------------------------------------

@@ -13,7 +13,10 @@ import com.zitga.idle.battleInfo.service.formation.FormationService;
 import com.zitga.idle.enumeration.common.GameMode;
 import com.zitga.idle.player.model.Player;
 import com.zitga.idle.pve.model.message.ChallengeResult;
+import com.zitga.idle.pve.model.message.DragonBotData;
 import com.zitga.support.JsonService;
+
+import java.util.List;
 
 @BeanComponent
 public class PveChallengeService {
@@ -28,19 +31,22 @@ public class PveChallengeService {
     private PveDataService pveDataService;
 
     @BeanField
+    private PveService pveService;
+
+    @BeanField
     private JsonService jsonService;
 
     public ChallengeResult challenge(Player player, BattleTeamInbound inbound) {
         ChallengeResult result = new ChallengeResult();
 
-        // TODO
-        // need to validate inbound
+        PredefineTeamData predefineTeamData = pveDataService.getDefenderData(inbound.getStage());
+        if (predefineTeamData == null) {
+            return result.withCode(LogicCode.CAMPAIGN_STAGE_INVALID);
+        }
 
         if (!formationService.saveFormation(player, GameMode.PVE, inbound)) {
             return result.withCode(LogicCode.FORMATION_INVALID);
         }
-
-        PredefineTeamData predefineTeamData = pveDataService.getDefenderData(101001);
 
         LuaBattle luaBattle = battleService.createBattle(GameMode.PVE, player, inbound, predefineTeamData);
 
@@ -49,6 +55,8 @@ public class PveChallengeService {
 
         result.setResultLog(BattleLogUtils.createBattleLog(resultInfo.getLuaBattleResult()));
 
+        List<DragonBotData> dragonBotDataList = pveService.getDefenderFormation(player, inbound.getStage());
+        result.setDragonBotDataList(dragonBotDataList);
         return result;
     }
 }

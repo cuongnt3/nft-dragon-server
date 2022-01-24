@@ -17,6 +17,7 @@ import com.zitga.idle.pve.model.PlayerPve;
 import com.zitga.idle.pve.model.message.DefenderTeamGetResult;
 import com.zitga.idle.pve.model.message.DragonBotData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @BeanComponent
@@ -47,22 +48,22 @@ public class PveService implements IAsyncPlayerDataManageable {
     }
 
     // ---------------------------------------- Handlers ----------------------------------------
-    public DefenderTeamGetResult getDefenderFormation(Player player, int stage) {
-        DefenderTeamGetResult result = new DefenderTeamGetResult();
+    public List<DragonBotData> getDefenderFormation(Player player, int stage) {
+        List<DragonBotData> dragonBotDataList = new ArrayList<>();
 
         PredefineTeamData predefineTeamData = pveDataService.getDefenderData(stage);
         if (predefineTeamData == null) {
-            return result.withCode(LogicCode.CAMPAIGN_STAGE_INVALID);
+            return null;
         }
 
         TeamLevelConfig levelConfig = battleDataService.getTeamLevelConfig(predefineTeamData.getTeamLevelId());
         if (levelConfig == null) {
-            return result.withCode(LogicCode.INVALID_INPUT_DATA);
+            return null;
         }
 
         TeamStarConfig starConfig = battleDataService.getTeamStarConfig(predefineTeamData.getTeamStarId());
         if (starConfig == null) {
-            return result.withCode(LogicCode.INVALID_INPUT_DATA);
+            return null;
         }
 
         FormationData formationData = heroDataService.getFormationData(PveConstant.FORMATION_DEFAULT);
@@ -83,9 +84,9 @@ public class PveService implements IAsyncPlayerDataManageable {
                 dragonBotData.setPosition(i + 1 - formationData.getFrontLine());
             }
 
-            result.addDragonBot(dragonBotData);
+            dragonBotDataList.add(dragonBotData);
         }
 
-        return result.withCode(LogicCode.SUCCESS);
+        return dragonBotDataList;
     }
 }

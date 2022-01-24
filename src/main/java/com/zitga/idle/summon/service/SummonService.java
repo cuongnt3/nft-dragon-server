@@ -85,8 +85,8 @@ public class SummonService {
             return result.withCode(LogicCode.DRAGON_EGG_IN_HATCH_DURATION);
         }
 
-        removeHatchedEgg(player, eggInventoryId);
         summonAndSaveData(player, dragonEgg, result);
+        removeHatchedEgg(player, eggInventoryId);
 
         return result.withCode(LogicCode.SUCCESS);
     }

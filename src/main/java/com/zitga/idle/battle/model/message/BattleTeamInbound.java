@@ -8,8 +8,11 @@ import java.util.List;
 
 public class BattleTeamInbound {
 
-    @JsonProperty("hero_list")
+    @JsonProperty("0")
     private List<BattleHeroInbound> battleHeroes = new ArrayList<>();
+
+    @JsonProperty("1")
+    private int stage;
 
     // ---------------------------------------- Getters ----------------------------------------
     @JsonIgnore
@@ -17,8 +20,8 @@ public class BattleTeamInbound {
         return battleHeroes;
     }
 
-    // ---------------------------------------- Setters ----------------------------------------
-    public void addBattleHero(BattleHeroInbound battleHeroInbound) {
-        this.battleHeroes.add(battleHeroInbound);
+    @JsonIgnore
+    public int getStage() {
+        return stage;
     }
 }

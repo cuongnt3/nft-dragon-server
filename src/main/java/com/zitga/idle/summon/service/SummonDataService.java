@@ -147,7 +147,7 @@ public class SummonDataService {
 
             if (summonGroup != null) {
                 summonDragon = new SummonDragon(data);
-                summonGroup.addDragonSummonRate(eggType, summonDragon);
+                summonGroup.addDragonSummonRate(summonDragon);
             } else {
                 throw new RuntimeException("Dragon summon pool is invalid");
             }

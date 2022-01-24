@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BattleHeroInbound {
 
-    @JsonProperty("id")
+    @JsonProperty("0")
     private long heroInventoryId;
 
-    @JsonProperty("position")
+    @JsonProperty("1")
     private int position;
 
-    @JsonProperty("is_front_line")
+    @JsonProperty("2")
     private boolean isFrontLine;
 
     // ---------------------------------------- Getters ----------------------------------------
